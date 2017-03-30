@@ -8,7 +8,7 @@ char * allocate_lattice(int rows, int columns);
 
 void populate_lattice(double probability, char * lattice, int rows, int columns);
 
-void print_lattice(char * lattice, int rows, int columns);
+void print_lattice(char * lattice, int rows, int columns, int with_borders);
 
 /* main body function */
 int main()
@@ -28,7 +28,7 @@ int main()
     populate_lattice(p, lattice, L, L);
 
     /* print the generated lattice for visualization */
-    print_lattice(lattice, L, L);
+    print_lattice(lattice, L, L, 1);
 
     /* free memory before leaving */
     free(lattice);
@@ -69,21 +69,48 @@ void populate_lattice(double probability, char * lattice, int rows, int columns)
     return;
 }
 
-void print_lattice(char * lattice, int rows, int columns)
+void print_lattice(char * lattice, int rows, int columns, int with_borders)
 {
     int i, j;
 
     for (i = 0; i < rows; i++) {
+        if (with_borders) {
+            for (j = 0; j < columns; j++) {
+                printf("----");
+            }
+            printf("-\n");
+        }
         for (j = 0; j < columns; j++) {
+            if (with_borders) {
+                putchar('|');
+                putchar(' ');
+            }
             if (lattice[i + j*rows] == 1) {
                 putchar('x');
             } else {
-                putchar('o');
+                if (with_borders) {
+                    putchar(' ');
+                } else {
+                    putchar('o');
+                }
             }
-            if (j < columns - 1) {
+            if (with_borders) {
                 putchar(' ');
+                if (j == columns - 1) {
+                    putchar('|');
+                }
+            } else {
+                if (j < columns - 1) {
+                    putchar(' ');
+                }
             }
         }
         putchar('\n');
+    }
+    if (with_borders) {
+        for (j = 0; j < columns; j++) {
+            printf("----");
+        }
+        printf("-\n");
     }
 }
