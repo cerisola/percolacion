@@ -1,6 +1,6 @@
 CC	:=	gcc
 
-CFLAGS	:= -Wall
+CFLAGS	:= -Wall -ansi -pedantic
 
 OUTDIR	:= build
 TARGET	:= percolation
