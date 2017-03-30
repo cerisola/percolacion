@@ -59,7 +59,7 @@ void populate_lattice(double probability, char * lattice, int rows, int columns)
 
     for (i = 0; i < rows; i++) {
         for (j = 0; j < columns; j++) {
-            q = rand()/RAND_MAX;
+            q = ((double)rand())/RAND_MAX;
             if (q <= probability) {
                 lattice[i + j*columns] = 1;
             }
