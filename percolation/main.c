@@ -15,13 +15,14 @@ int main()
 {
     int L; /* square lattice size */
     double p; /* occupation probability of each lattice site */
+    char *lattice; /* lattice array */
 
     /* initialize random number generator seed */
     srand(time(NULL));
 
     /* allocate lattice */
     L = 10;
-    char *lattice = allocate_lattice(L, L);
+    lattice = allocate_lattice(L, L);
 
     /* populate lattice with given probability */
     p = 0.4;
