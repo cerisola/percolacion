@@ -1,14 +1,9 @@
 /* headers */
 #include <stdlib.h>
 #include <time.h>
-#include <stdio.h>
 
-/* auxiliary functions declarations */
-char * allocate_lattice(int rows, int columns);
-
-void populate_lattice(double probability, char * lattice, int rows, int columns);
-
-void print_lattice(char * lattice, int rows, int columns, int with_borders);
+#include "lattice.h"
+#include "io_helpers.h"
 
 /* main body function */
 int main()
@@ -35,83 +30,4 @@ int main()
     free(lattice);
 
     return 0;
-}
-
-/* auxiliary functions definitions */
-char * allocate_lattice(int rows, int columns)
-{
-    char *lattice;
-    int i, j;
-
-    lattice = (char *) malloc(rows*columns*sizeof(char));
-    for (i = 0; i < rows; i++) {
-        for (j = 0; j < columns; j++) {
-            lattice[i*columns + j] = 0;
-        }
-    }
-
-    return lattice;
-}
-
-void populate_lattice(double probability, char * lattice, int rows, int columns)
-{
-    int i, j;
-    double q;
-
-    for (i = 0; i < rows; i++) {
-        for (j = 0; j < columns; j++) {
-            q = ((double)rand())/RAND_MAX;
-            if (q <= probability) {
-                lattice[i*columns + j] = 1;
-            }
-        }
-    }
-
-    return;
-}
-
-void print_lattice(char * lattice, int rows, int columns, int with_borders)
-{
-    int i, j;
-
-    for (i = 0; i < rows; i++) {
-        if (with_borders) {
-            for (j = 0; j < columns; j++) {
-                printf("----");
-            }
-            printf("-\n");
-        }
-        for (j = 0; j < columns; j++) {
-            if (with_borders) {
-                putchar('|');
-                putchar(' ');
-            }
-            if (lattice[i*columns + j] == 1) {
-                putchar('x');
-            } else {
-                if (with_borders) {
-                    putchar(' ');
-                } else {
-                    putchar('o');
-                }
-            }
-            if (with_borders) {
-                putchar(' ');
-                if (j == columns - 1) {
-                    putchar('|');
-                }
-            } else {
-                if (j < columns - 1) {
-                    putchar(' ');
-                }
-            }
-        }
-        putchar('\n');
-    }
-    if (with_borders) {
-        for (j = 0; j < columns; j++) {
-            printf("----");
-        }
-        printf("-\n");
-    }
 }

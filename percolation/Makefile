@@ -5,9 +5,18 @@ CFLAGS	:= -Wall -ansi -pedantic
 OUTDIR	:= build
 TARGET	:= percolation
 
-all:
+SRCS=$(wildcard *.c)
+OBJS=$(subst .c,.o,$(SRCS))
+
+all: $(OBJS)
 	@mkdir -p $(OUTDIR)
-	$(CC) $(CFLAGS) main.c -o $(OUTDIR)/$(TARGET)
+	$(CC) -o $(OUTDIR)/$(TARGET) $(OBJS)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $<
 
 clean:
+	$(RM) *.o
+
+distclean: clean
 	$(RM) $(OUTDIR)/$(TARGET)
