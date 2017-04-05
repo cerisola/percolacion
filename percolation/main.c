@@ -12,18 +12,25 @@ int main(int argc, char ** argv)
     int L; /* square lattice size */
     double p; /* occupation probability of each lattice site */
     int *lattice; /* lattice array */
+    unsigned int random_seed; /* random number generator seed */
 
     /* read input arguments; if none provided fallback to default values */
-    if (argc == 3) {
+    if (argc == 3 || argc == 4) {
         L = atoi(argv[1]);
         p = atof(argv[2]);
+        if (argc == 4) {
+            random_seed = atoi(argv[3]);
+        } else {
+            random_seed = (unsigned int)time(NULL);
+        }
     } else {
         L = 10;
         p = 0.4;
+        random_seed = (unsigned int)time(NULL);
     }
 
     /* initialize random number generator seed */
-    srand(time(NULL));
+    srand(random_seed);
 
     /* allocate lattice */
     lattice = allocate_lattice(L, L);
