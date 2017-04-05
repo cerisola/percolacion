@@ -3,4 +3,4 @@
 */
 
 /* Print lattice to the standard output */
-void print_lattice(char * lattice, int rows, int columns, int with_borders);
+void print_lattice(int * lattice, int rows, int columns, int with_borders);

@@ -1,12 +1,12 @@
 #include "lattice.h"
 #include <stdlib.h>
 
-char * allocate_lattice(int rows, int columns)
+int * allocate_lattice(int rows, int columns)
 {
-    char *lattice;
+    int *lattice;
     int i, j;
 
-    lattice = (char *) malloc(rows*columns*sizeof(char));
+    lattice = (int *) malloc(rows*columns*sizeof(int));
     for (i = 0; i < rows; i++) {
         for (j = 0; j < columns; j++) {
             lattice[i*columns + j] = 0;
@@ -16,7 +16,7 @@ char * allocate_lattice(int rows, int columns)
     return lattice;
 }
 
-void populate_lattice(double probability, char * lattice, int rows, int columns)
+void populate_lattice(double probability, int * lattice, int rows, int columns)
 {
     int i, j;
     double q;
