@@ -46,7 +46,7 @@ char * allocate_lattice(int rows, int columns)
     lattice = (char *) malloc(rows*columns*sizeof(char));
     for (i = 0; i < rows; i++) {
         for (j = 0; j < columns; j++) {
-            lattice[i + j*rows] = 0;
+            lattice[i*columns + j] = 0;
         }
     }
 
@@ -62,7 +62,7 @@ void populate_lattice(double probability, char * lattice, int rows, int columns)
         for (j = 0; j < columns; j++) {
             q = ((double)rand())/RAND_MAX;
             if (q <= probability) {
-                lattice[i + j*rows] = 1;
+                lattice[i*columns + j] = 1;
             }
         }
     }
@@ -86,7 +86,7 @@ void print_lattice(char * lattice, int rows, int columns, int with_borders)
                 putchar('|');
                 putchar(' ');
             }
-            if (lattice[i + j*rows] == 1) {
+            if (lattice[i*columns + j] == 1) {
                 putchar('x');
             } else {
                 if (with_borders) {
