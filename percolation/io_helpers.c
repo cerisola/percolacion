@@ -48,5 +48,7 @@ void print_lattice(int * lattice, int rows, int columns, int with_borders)
             printf("------");
         }
         printf("-\n");
+    } else {
+        putchar('\n');
     }
 }
