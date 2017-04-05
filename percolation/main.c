@@ -3,6 +3,7 @@
 #include <time.h>
 
 #include "lattice.h"
+#include "clusters.h"
 #include "io_helpers.h"
 
 /* main body function */
@@ -24,6 +25,10 @@ int main()
     populate_lattice(p, lattice, L, L);
 
     /* print the generated lattice for visualization */
+    print_lattice(lattice, L, L, 1);
+
+    /* label clusters and print result */
+    label_clusters(lattice, L, L);
     print_lattice(lattice, L, L, 1);
 
     /* free memory before leaving */
