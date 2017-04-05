@@ -10,7 +10,7 @@ int main()
 {
     int L; /* square lattice size */
     double p; /* occupation probability of each lattice site */
-    char *lattice; /* lattice array */
+    int *lattice; /* lattice array */
 
     /* initialize random number generator seed */
     srand(time(NULL));

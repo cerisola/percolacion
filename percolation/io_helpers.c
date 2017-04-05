@@ -1,7 +1,7 @@
 #include "io_helpers.h"
 #include <stdio.h>
 
-void print_lattice(char * lattice, int rows, int columns, int with_borders)
+void print_lattice(int * lattice, int rows, int columns, int with_borders)
 {
     int i, j;
 
