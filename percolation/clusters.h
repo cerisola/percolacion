@@ -19,3 +19,16 @@
     @param columns the nubmer of columns in the lattice.
 */
 void label_clusters(int * lattice, int rows, int columns);
+
+/*! Determine whether a lattice has a percolating cluster.
+
+    @param lattice pointer to lattice to be analyzed. The lattice must already
+        have all clusters labeled.
+    @param  rows the number of rows in the lattice.
+    @param columns the number of columns in the lattice.
+    @return A boolean indicating whether the lattice has a percolating cluster
+        or not.
+
+    @see label_clusters for a function that labels clusters in a lattice.
+*/
+char has_percolating_cluster(const int * lattice, int rows, int columns);

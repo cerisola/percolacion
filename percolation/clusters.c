@@ -116,3 +116,36 @@ void label_clusters(int * lattice, int rows, int columns)
     /* free used memory */
     free(labels);
 }
+
+char has_percolating_cluster(const int * lattice, int rows, int columns)
+{
+    int i;
+    int j;
+
+    /* compare first and last row labels */
+    for (i = 0; i < columns; i++) {
+        if (lattice[i] == 0) {
+            continue;
+        }
+        for (j = 0; j < columns; j++) {
+            if (lattice[i] == lattice[rows*(columns-1) + j]) {
+                return 1;
+            }
+        }
+    }
+
+    /* compare first and last column labels */
+    for (i = 0; i < rows; i++) {
+        if (lattice[i*columns] == 0) {
+            continue;
+        }
+        for (j = 0; j < rows; j++) {
+            if (lattice[i*columns] == lattice[j*columns + columns - 1]) {
+                return 1;
+            }
+        }
+    }
+
+    /* if none of the above is true, then there is no percolating cluster */
+    return 0;
+}
