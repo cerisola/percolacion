@@ -1,6 +1,7 @@
 /* headers */
 #include <stdlib.h>
 #include <time.h>
+#include <stdio.h>
 
 #include "lattice.h"
 #include "clusters.h"
@@ -13,6 +14,7 @@ int main(int argc, char ** argv)
     double p; /* occupation probability of each lattice site */
     int *lattice; /* lattice array */
     unsigned int random_seed; /* random number generator seed */
+    char percolated;
 
     /* read input arguments; if none provided fallback to default values */
     if (argc == 3 || argc == 4) {
@@ -44,6 +46,10 @@ int main(int argc, char ** argv)
     /* label clusters and print result */
     label_clusters(lattice, L, L);
     print_lattice(lattice, L, L, 1);
+
+    /* determine presence of a percolating cluster */
+    percolated = has_percolating_cluster(lattice, L, L);
+    printf("Lattice has percolating cluster: %s\n", percolated ? "true" : "false");
 
     /* free memory before leaving */
     free(lattice);
