@@ -19,5 +19,8 @@ int * allocate_lattice(int rows, int columns);
     @param lattice a pointer to the lattice to be populated.
     @param rows the number of rows in the lattice.
     @param columns the number of columns in the lattice.
+    @param seed the seed used to initialize the random number generator. If
+        seed = 0, the random number generator is not initialized.
 */
-void populate_lattice(double probability, int * lattice, int rows, int columns);
+void populate_lattice(double probability, int * lattice, int rows, int columns,
+                      unsigned int seed);

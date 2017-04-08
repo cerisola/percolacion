@@ -36,14 +36,11 @@ int main(int argc, char ** argv)
         random_seed = (unsigned int)time(NULL);
     }
 
-    /* initialize random number generator seed */
-    srand(random_seed);
-
     /* allocate lattice */
     lattice = allocate_lattice(L, L);
 
     /* populate lattice with given probability */
-    populate_lattice(p, lattice, L, L);
+    populate_lattice(p, lattice, L, L, random_seed);
 
     /* print the generated lattice for visualization */
     print_lattice(lattice, L, L, 1);
