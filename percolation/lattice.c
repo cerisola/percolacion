@@ -31,6 +31,8 @@ void populate_lattice(double probability, int * lattice, int rows, int columns,
             q = ((double)rand())/RAND_MAX;
             if (q <= probability) {
                 lattice[i*columns + j] = 1;
+            } else {
+                lattice[i*columns + j] = 0;
             }
         }
     }
