@@ -155,22 +155,28 @@ void cluster_statistics(const int * lattice, int rows, int columns,
                         int ** cluster_sizes_counts, int * filled_count, int * empty_count)
 {
     int i;
-    int tmp;
     int lattice_size;
     int cluster_labels_total_count; /* total number of different cluster labels */
     int * cluster_labels_indices; /* indices mapping each cluster label to a count value */
     int * cluster_labels_sizes; /* size of cluster for each label (via above index mapping */
+    int * cluster_sizes_indices; /* indices mapping for each cluster size to a size value */
 
     /* assign each label their total node count; stored via an index mapping */
     lattice_size = rows*columns;
     cluster_labels_total_count = 0;
     cluster_labels_indices = (int *)malloc((lattice_size/2)*sizeof(int));
     cluster_labels_sizes = (int *)malloc((lattice_size/2)*sizeof(int));
+    cluster_sizes_indices = (int *)malloc((lattice_size)*sizeof(int));
     for (i = 0; i < lattice_size/2; i++) {
         cluster_labels_indices[i] = -1;
         cluster_labels_sizes[i] = 0;
     }
     for (i = 0; i < lattice_size; i++) {
+        /* use this loop to initialize this array for later use; this way we
+           save ourselves an extra loop over the entire lattice */
+        cluster_sizes_indices[i] = -1;
+
+        /* actual cluster size counting */
         if (lattice[i] == 0) {
             continue;
         }
@@ -186,27 +192,23 @@ void cluster_statistics(const int * lattice, int rows, int columns,
 
     /* get count of each cluster size */
     *cluster_sizes_total_count = 0;
-    *cluster_sizes = (int *)malloc(lattice_size*sizeof(int));
-    *cluster_sizes_counts = (int *)malloc(lattice_size*sizeof(int));
-    for (i = 0; i < lattice_size; i++) {
+    *cluster_sizes = (int *)malloc(cluster_labels_total_count*sizeof(int));
+    *cluster_sizes_counts = (int *)malloc(cluster_labels_total_count*sizeof(int));
+    for (i = 0; i < cluster_labels_total_count; i++) {
         (*cluster_sizes)[i] = 0;
         (*cluster_sizes_counts)[i] = 0;
     }
     for (i = 0; i < cluster_labels_total_count; i++) {
-        (*cluster_sizes_counts)[cluster_labels_sizes[i]] += 1;
+        if (cluster_sizes_indices[cluster_labels_sizes[i]] < 0) {
+            cluster_sizes_indices[cluster_labels_sizes[i]] = *cluster_sizes_total_count;
+            (*cluster_sizes_total_count) += 1;
+        }
+        (*cluster_sizes)[cluster_sizes_indices[cluster_labels_sizes[i]]] = cluster_labels_sizes[i];
+        (*cluster_sizes_counts)[cluster_sizes_indices[cluster_labels_sizes[i]]] += 1;
     }
 
     free(cluster_labels_sizes);
-
-    for (i = 0; i < lattice_size; i++) {
-        if ((*cluster_sizes_counts)[i]) {
-            (*cluster_sizes)[*cluster_sizes_total_count] = i;
-            tmp = (*cluster_sizes_counts)[*cluster_sizes_total_count];
-            (*cluster_sizes_counts)[*cluster_sizes_total_count] = (*cluster_sizes_counts)[i];
-            (*cluster_sizes_counts)[i] = tmp;
-            (*cluster_sizes_total_count) += 1;
-        }
-    }
+    free(cluster_sizes_indices);
 
     *cluster_sizes = realloc(*cluster_sizes, (*cluster_sizes_total_count)*sizeof(int));
     *cluster_sizes_counts = realloc(*cluster_sizes_counts, (*cluster_sizes_total_count)*sizeof(int));
