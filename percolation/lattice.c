@@ -1,12 +1,17 @@
 #include "lattice.h"
 #include <stdlib.h>
 
-int * allocate_lattice(int rows, int columns)
+int * allocate_lattice(int rows, int columns, int initialize)
 {
     int *lattice;
     int i, j;
 
     lattice = (int *) malloc(rows*columns*sizeof(int));
+
+    if (!initialize) {
+        return lattice;
+    }
+
     for (i = 0; i < rows; i++) {
         for (j = 0; j < columns; j++) {
             lattice[i*columns + j] = 0;

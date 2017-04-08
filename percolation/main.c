@@ -37,7 +37,7 @@ int main(int argc, char ** argv)
     }
 
     /* allocate lattice */
-    lattice = allocate_lattice(L, L);
+    lattice = allocate_lattice(L, L, 0);
 
     /* populate lattice with given probability */
     populate_lattice(p, lattice, L, L, random_seed);
