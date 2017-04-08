@@ -56,7 +56,7 @@ void print_lattice(const int * lattice, int rows, int columns, int with_borders)
 }
 
 void write_lattice_to_file(const char * path, const int * lattice, int rows,
-                           int columns, int seed)
+                           int columns, double probability, int seed)
 {
     int i;
     int j;
@@ -65,6 +65,7 @@ void write_lattice_to_file(const char * path, const int * lattice, int rows,
     char * file_full_path;
     char * rows_string;
     char * columns_string;
+    char * probability_string;
     char * seed_string;
     FILE * file_handler;
 
@@ -73,6 +74,9 @@ void write_lattice_to_file(const char * path, const int * lattice, int rows,
 
     columns_string = (char *)malloc(12*sizeof(char));
     sprintf(columns_string, "%d", columns);
+
+    probability_string = (char *)malloc(16*sizeof(char));
+    sprintf(probability_string, "%.12f", probability);
 
     seed_string = (char *)malloc(12*sizeof(char));
     sprintf(seed_string, "%d", seed);
@@ -85,6 +89,8 @@ void write_lattice_to_file(const char * path, const int * lattice, int rows,
     strcat(file_full_path, rows_string);
     strcat(file_full_path, "x");
     strcat(file_full_path, columns_string);
+    strcat(file_full_path, "_");
+    strcat(file_full_path, probability_string);
     strcat(file_full_path, "_");
     strcat(file_full_path, seed_string);
     strcat(file_full_path, ".csv");
@@ -103,6 +109,7 @@ void write_lattice_to_file(const char * path, const int * lattice, int rows,
     fclose(file_handler);
     free(rows_string);
     free(columns_string);
+    free(probability_string);
     free(seed_string);
     free(file_full_path);
 }
@@ -111,7 +118,8 @@ void write_cluster_statistics_to_file(const char * path,
                                       const int * cluster_sizes,
                                       const int * cluster_sizes_counts,
                                       int cluster_sizes_total_count,
-                                      int rows, int columns, int seed)
+                                      int rows, int columns, double probability,
+                                      int seed)
 {
     int i;
     size_t path_length;
@@ -119,6 +127,7 @@ void write_cluster_statistics_to_file(const char * path,
     char * file_full_path;
     char * rows_string;
     char * columns_string;
+    char * probability_string;
     char * seed_string;
     FILE * file_handler;
 
@@ -127,6 +136,9 @@ void write_cluster_statistics_to_file(const char * path,
 
     columns_string = (char *)malloc(12*sizeof(char));
     sprintf(columns_string, "%d", columns);
+
+    probability_string = (char *)malloc(16*sizeof(char));
+    sprintf(probability_string, "%.12f", probability);
 
     seed_string = (char *)malloc(12*sizeof(char));
     sprintf(seed_string, "%d", seed);
@@ -140,6 +152,8 @@ void write_cluster_statistics_to_file(const char * path,
     strcat(file_full_path, "x");
     strcat(file_full_path, columns_string);
     strcat(file_full_path, "_");
+    strcat(file_full_path, probability_string);
+    strcat(file_full_path, "_");
     strcat(file_full_path, seed_string);
     strcat(file_full_path, ".csv");
 
@@ -151,6 +165,7 @@ void write_cluster_statistics_to_file(const char * path,
     fclose(file_handler);
     free(rows_string);
     free(columns_string);
+    free(probability_string);
     free(seed_string);
     free(file_full_path);
 }

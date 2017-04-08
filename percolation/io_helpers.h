@@ -20,10 +20,11 @@ void print_lattice(const int * lattice, int rows, int columns, int with_borders)
     @param lattice pointer to lattice to be written.
     @param rows the number of rows in the lattice.
     @param columns the number of columns in the lattice.
+    @param probability the probability used to populate the lattice.
     @param seed the random generator seed used to generate the lattice.
 */
 void write_lattice_to_file(const char * path, const int * lattice, int rows,
-                           int columns, int seed);
+                           int columns, double probability, int seed);
 
 /*! Write cluster statistics to file.
 
@@ -37,10 +38,12 @@ void write_lattice_to_file(const char * path, const int * lattice, int rows,
     @param cluster_sizes_total_count total amount of different cluster sizes.
     @param rows the number of rows in the lattice.
     @param columns the number of columns in the lattice.
+    @param probability the probability used to populate the lattice.
     @param seed the random number generator seed used to generate the lattice.
 */
 void write_cluster_statistics_to_file(const char * path,
                                       const int * cluster_sizes,
                                       const int * cluster_sizes_counts,
                                       int cluster_sizes_total_count,
-                                      int rows, int columns, int seed);
+                                      int rows, int columns, double probability,
+                                      int seed);
