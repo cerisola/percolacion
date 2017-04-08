@@ -97,12 +97,6 @@ void label_clusters(int * lattice, int rows, int columns)
         }
     }
 
-    /* for debugging purposes */
-    /*
-    print_lattice(lattice, rows, columns, 1);
-    print_lattice(labels, 2, lattice_size/4, 1);
-    */
-
     /* resolve temporary labels */
     for (i = 0; i < lattice_size; i++) {
         current_label = lattice[i];
