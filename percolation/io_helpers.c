@@ -118,8 +118,8 @@ void write_cluster_statistics_to_file(const char * path,
                                       const int * cluster_sizes,
                                       const int * cluster_sizes_counts,
                                       int cluster_sizes_total_count,
-                                      int rows, int columns, double probability,
-                                      int seed)
+                                      int percolated,  int rows, int columns,
+                                      double probability, int seed)
 {
     int i;
     size_t path_length;
@@ -158,6 +158,7 @@ void write_cluster_statistics_to_file(const char * path,
     strcat(file_full_path, ".csv");
 
     file_handler = fopen(file_full_path, "w");
+    fprintf(file_handler, "percolated:%d\n", percolated);
     for (i = 0; i < cluster_sizes_total_count; i++) {
         fprintf(file_handler, "%d,%d\n", cluster_sizes[i], cluster_sizes_counts[i]);
     }
