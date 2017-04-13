@@ -17,7 +17,8 @@ int main(int argc, char ** argv)
     int N; /* number of trials */
     int precision; /* minimum step in the probability when searching is 1/2**precision */
     unsigned int random_seed; /* random number generator seed */
-    double p_critical; /* estimated critical probability */
+    double * p_critical; /* estimated critical probabilities */
+    double p_critical_average; /* average of the estimated critical probabilities */
     double p; /* occupation probability of each lattice site */
     int * lattice; /* lattice array */
     char percolated; /* whether the lattice has percolated */
@@ -40,7 +41,8 @@ int main(int argc, char ** argv)
     }
 
     /* initialilze variable values */
-    p_critical = 0;
+    p_critical = (double *)malloc(N*sizeof(double));
+    p_critical_average = 0;
 
     /* allocate lattice without initializing its values */
     lattice = allocate_lattice(L, L, 0);
@@ -63,7 +65,8 @@ int main(int argc, char ** argv)
             }
         }
 
-        p_critical += p;
+        p_critical[n] = p;
+        p_critical_average += p;
 
         /* progress report to stdout */
         if ((n+1) % 100 == 0) {
@@ -71,8 +74,13 @@ int main(int argc, char ** argv)
         }
     }
 
-    p_critical = p_critical / N;
+    p_critical_average = p_critical_average / N;
 
     /* return estimated value */
-    printf("p critical: %f\n", p_critical);
+    printf("p critical average: %f\n", p_critical_average);
+
+    /* free memory before leaving */
+    free(p_critical);
+
+    return 0;
 }
