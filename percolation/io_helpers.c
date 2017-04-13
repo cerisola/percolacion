@@ -91,6 +91,10 @@ void write_lattice_to_file(const char * path, const int * lattice, int rows,
     file_full_path = format_file_full_path(path, "lattice", rows, columns, seed);
 
     file_handler = fopen(file_full_path, "w");
+    fprintf(file_handler, ";rows:%d\n", rows);
+    fprintf(file_handler, ";columns:%d\n", columns);
+    fprintf(file_handler, ";seed:%d\n", seed);
+    fprintf(file_handler, ";probability:%.*e\n", DBL_DIG-1, probability);
     for (i = 0; i < rows; i++) {
         for (j = 0; j < columns; j++) {
             fprintf(file_handler, "%d", lattice[i*columns + j]);
@@ -119,7 +123,11 @@ void write_cluster_statistics_to_file(const char * path,
     file_full_path = format_file_full_path(path, "clusters", rows, columns, seed);
 
     file_handler = fopen(file_full_path, "w");
-    fprintf(file_handler, "percolated:%d\n", percolated);
+    fprintf(file_handler, ";rows:%d\n", rows);
+    fprintf(file_handler, ";columns:%d\n", columns);
+    fprintf(file_handler, ";seed:%d\n", seed);
+    fprintf(file_handler, ";probability:%.*e\n", DBL_DIG-1, probability);
+    fprintf(file_handler, ";percolated:%d\n", percolated);
     for (i = 0; i < cluster_sizes_total_count; i++) {
         fprintf(file_handler, "%d,%d\n", cluster_sizes[i], cluster_sizes_counts[i]);
     }
