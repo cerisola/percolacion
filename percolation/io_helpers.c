@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <float.h>
+#include <time.h>
 
 void print_lattice(const int * lattice, int rows, int columns, int with_borders)
 {
@@ -85,9 +86,11 @@ void write_lattice_to_file(const char * path, const int * lattice, int rows,
 {
     int i;
     int j;
+    time_t current_time;
     char * file_full_path;
     FILE * file_handler;
 
+    current_time = time(NULL);
     file_full_path = format_file_full_path(path, "lattice", rows, columns, seed);
 
     file_handler = fopen(file_full_path, "w");
@@ -95,6 +98,7 @@ void write_lattice_to_file(const char * path, const int * lattice, int rows,
     fprintf(file_handler, ";columns:%d\n", columns);
     fprintf(file_handler, ";seed:%d\n", seed);
     fprintf(file_handler, ";probability:%.*e\n", DBL_DIG-1, probability);
+    fprintf(file_handler, ";date:%s", asctime(localtime(&current_time)));
     for (i = 0; i < rows; i++) {
         for (j = 0; j < columns; j++) {
             fprintf(file_handler, "%d", lattice[i*columns + j]);
@@ -117,9 +121,11 @@ void write_cluster_statistics_to_file(const char * path,
                                       double probability, int seed)
 {
     int i;
+    time_t current_time;
     char * file_full_path;
     FILE * file_handler;
 
+    current_time = time(NULL);
     file_full_path = format_file_full_path(path, "clusters", rows, columns, seed);
 
     file_handler = fopen(file_full_path, "w");
@@ -128,6 +134,7 @@ void write_cluster_statistics_to_file(const char * path,
     fprintf(file_handler, ";seed:%d\n", seed);
     fprintf(file_handler, ";probability:%.*e\n", DBL_DIG-1, probability);
     fprintf(file_handler, ";percolated:%d\n", percolated);
+    fprintf(file_handler, ";date:%s", asctime(localtime(&current_time)));
     for (i = 0; i < cluster_sizes_total_count; i++) {
         fprintf(file_handler, "%d,%d\n", cluster_sizes[i], cluster_sizes_counts[i]);
     }
@@ -143,9 +150,11 @@ void write_critical_point_search_results(const char * path,
                                          double start_probability, int seed)
 {
     int i;
+    time_t current_time;
     char * file_full_path;
     FILE * file_handler;
 
+    current_time = time(NULL);
     file_full_path = format_file_full_path(path, "critical_search", rows, columns, seed);
 
     file_handler = fopen(file_full_path, "w");
@@ -155,6 +164,7 @@ void write_critical_point_search_results(const char * path,
     fprintf(file_handler, ";pini:%.*e\n", DBL_DIG-1, start_probability);
     fprintf(file_handler, ";ntrials:%d\n", number_trials);
     fprintf(file_handler, ";precision:%d\n", precision);
+    fprintf(file_handler, ";date:%s", asctime(localtime(&current_time)));
     for (i = 0; i < number_trials; i++) {
         fprintf(file_handler, "%.*e\n", DBL_DIG-1, critical_points[i]);
     }
