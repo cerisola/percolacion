@@ -83,6 +83,7 @@ int main(int argc, char ** argv)
 
     /* free memory before leaving */
     free(p_critical);
+    free(lattice);
 
     return 0;
 }
