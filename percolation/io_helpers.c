@@ -56,19 +56,32 @@ void print_lattice(const int * lattice, int rows, int columns, int with_borders)
     }
 }
 
-void write_lattice_to_file(const char * path, const int * lattice, int rows,
-                           int columns, double probability, int seed)
+/*! Format the file name with the given parameters
+    @param path path to the folder where the data will be written.
+    @param prefix file name prefix.
+    @param rows the number of rows in the lattice.
+    @param columns the number of columns in the lattice.
+    @param seed the initial random number generator seed used to populate the
+        lattice.
+
+    @returns pointer to array where the formatted file full path will be
+        written.
+*/
+char * format_file_full_path(const char * path, const char * prefix, int rows,
+                           int columns, int seed)
 {
-    int i;
-    int j;
     size_t path_length;
+    size_t prefix_length;
     size_t file_full_path_length;
     char * file_full_path;
+    char * file_name_prefix_string;
     char * rows_string;
     char * columns_string;
-    char * probability_string;
     char * seed_string;
-    FILE * file_handler;
+
+    prefix_length = strlen(prefix);
+    file_name_prefix_string = (char *)malloc((prefix_length + 12)*sizeof(char));
+    sprintf(file_name_prefix_string, "/%s_", prefix);
 
     rows_string = (char *)malloc(12*sizeof(char));
     sprintf(rows_string, "%d", rows);
@@ -76,25 +89,38 @@ void write_lattice_to_file(const char * path, const int * lattice, int rows,
     columns_string = (char *)malloc(12*sizeof(char));
     sprintf(columns_string, "%d", columns);
 
-    probability_string = (char *)malloc(16*sizeof(char));
-    sprintf(probability_string, "%.12f", probability);
-
     seed_string = (char *)malloc(12*sizeof(char));
     sprintf(seed_string, "%d", seed);
 
     path_length = strlen(path);
-    file_full_path_length  = path_length + 70;
+    file_full_path_length  = path_length + strlen(file_name_prefix_string) + 70;
     file_full_path = (char *)malloc(file_full_path_length*sizeof(char));
     strcpy(file_full_path, path);
-    strcat(file_full_path, "/lattice_");
+    strcat(file_full_path, file_name_prefix_string);
     strcat(file_full_path, rows_string);
     strcat(file_full_path, "x");
     strcat(file_full_path, columns_string);
     strcat(file_full_path, "_");
-    strcat(file_full_path, probability_string);
-    strcat(file_full_path, "_");
     strcat(file_full_path, seed_string);
     strcat(file_full_path, ".csv");
+
+    free(file_name_prefix_string);
+    free(rows_string);
+    free(columns_string);
+    free(seed_string);
+
+    return file_full_path;
+}
+
+void write_lattice_to_file(const char * path, const int * lattice, int rows,
+                           int columns, double probability, int seed)
+{
+    int i;
+    int j;
+    char * file_full_path;
+    FILE * file_handler;
+
+    file_full_path = format_file_full_path(path, "lattice", rows, columns, seed);
 
     file_handler = fopen(file_full_path, "w");
     for (i = 0; i < rows; i++) {
@@ -108,10 +134,6 @@ void write_lattice_to_file(const char * path, const int * lattice, int rows,
     }
 
     fclose(file_handler);
-    free(rows_string);
-    free(columns_string);
-    free(probability_string);
-    free(seed_string);
     free(file_full_path);
 }
 
@@ -123,40 +145,10 @@ void write_cluster_statistics_to_file(const char * path,
                                       double probability, int seed)
 {
     int i;
-    size_t path_length;
-    size_t file_full_path_length;
     char * file_full_path;
-    char * rows_string;
-    char * columns_string;
-    char * probability_string;
-    char * seed_string;
     FILE * file_handler;
 
-    rows_string = (char *)malloc(12*sizeof(char));
-    sprintf(rows_string, "%d", rows);
-
-    columns_string = (char *)malloc(12*sizeof(char));
-    sprintf(columns_string, "%d", columns);
-
-    probability_string = (char *)malloc(16*sizeof(char));
-    sprintf(probability_string, "%.12f", probability);
-
-    seed_string = (char *)malloc(12*sizeof(char));
-    sprintf(seed_string, "%d", seed);
-
-    path_length = strlen(path);
-    file_full_path_length  = path_length + 70;
-    file_full_path = (char *)malloc(file_full_path_length*sizeof(char));
-    strcpy(file_full_path, path);
-    strcat(file_full_path, "/clusters_");
-    strcat(file_full_path, rows_string);
-    strcat(file_full_path, "x");
-    strcat(file_full_path, columns_string);
-    strcat(file_full_path, "_");
-    strcat(file_full_path, probability_string);
-    strcat(file_full_path, "_");
-    strcat(file_full_path, seed_string);
-    strcat(file_full_path, ".csv");
+    file_full_path = format_file_full_path(path, "clusters", rows, columns, seed);
 
     file_handler = fopen(file_full_path, "w");
     fprintf(file_handler, "percolated:%d\n", percolated);
@@ -165,10 +157,6 @@ void write_cluster_statistics_to_file(const char * path,
     }
 
     fclose(file_handler);
-    free(rows_string);
-    free(columns_string);
-    free(probability_string);
-    free(seed_string);
     free(file_full_path);
 }
 
@@ -179,34 +167,10 @@ void write_critical_point_search_results(const char * path,
                                          double start_probability, int seed)
 {
     int i;
-    size_t path_length;
-    size_t file_full_path_length;
     char * file_full_path;
-    char * rows_string;
-    char * columns_string;
-    char * seed_string;
     FILE * file_handler;
 
-    rows_string = (char *)malloc(12*sizeof(char));
-    sprintf(rows_string, "%d", rows);
-
-    columns_string = (char *)malloc(12*sizeof(char));
-    sprintf(columns_string, "%d", columns);
-
-    seed_string = (char *)malloc(12*sizeof(char));
-    sprintf(seed_string, "%d", seed);
-
-    path_length = strlen(path);
-    file_full_path_length  = path_length + 80;
-    file_full_path = (char *)malloc(file_full_path_length*sizeof(char));
-    strcpy(file_full_path, path);
-    strcat(file_full_path, "/critical_search_");
-    strcat(file_full_path, rows_string);
-    strcat(file_full_path, "x");
-    strcat(file_full_path, columns_string);
-    strcat(file_full_path, "_");
-    strcat(file_full_path, seed_string);
-    strcat(file_full_path, ".csv");
+    file_full_path = format_file_full_path(path, "critical_search", rows, columns, seed);
 
     file_handler = fopen(file_full_path, "w");
     fprintf(file_handler, ";rows:%d\n", rows);
@@ -220,8 +184,5 @@ void write_critical_point_search_results(const char * path,
     }
 
     fclose(file_handler);
-    free(rows_string);
-    free(columns_string);
-    free(seed_string);
     free(file_full_path);
 }
