@@ -70,44 +70,12 @@ void print_lattice(const int * lattice, int rows, int columns, int with_borders)
 char * format_file_full_path(const char * path, const char * prefix, int rows,
                            int columns, int seed)
 {
-    size_t path_length;
-    size_t prefix_length;
     size_t file_full_path_length;
     char * file_full_path;
-    char * file_name_prefix_string;
-    char * rows_string;
-    char * columns_string;
-    char * seed_string;
 
-    prefix_length = strlen(prefix);
-    file_name_prefix_string = (char *)malloc((prefix_length + 12)*sizeof(char));
-    sprintf(file_name_prefix_string, "/%s_", prefix);
-
-    rows_string = (char *)malloc(12*sizeof(char));
-    sprintf(rows_string, "%d", rows);
-
-    columns_string = (char *)malloc(12*sizeof(char));
-    sprintf(columns_string, "%d", columns);
-
-    seed_string = (char *)malloc(12*sizeof(char));
-    sprintf(seed_string, "%d", seed);
-
-    path_length = strlen(path);
-    file_full_path_length  = path_length + strlen(file_name_prefix_string) + 70;
+    file_full_path_length = strlen(path) + strlen(prefix) + 120;
     file_full_path = (char *)malloc(file_full_path_length*sizeof(char));
-    strcpy(file_full_path, path);
-    strcat(file_full_path, file_name_prefix_string);
-    strcat(file_full_path, rows_string);
-    strcat(file_full_path, "x");
-    strcat(file_full_path, columns_string);
-    strcat(file_full_path, "_");
-    strcat(file_full_path, seed_string);
-    strcat(file_full_path, ".csv");
-
-    free(file_name_prefix_string);
-    free(rows_string);
-    free(columns_string);
-    free(seed_string);
+    sprintf(file_full_path, "%s/%s_%dx%d_%d.csv", path, prefix, rows, columns, seed);
 
     return file_full_path;
 }
