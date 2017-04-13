@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <float.h>
 
 void print_lattice(const int * lattice, int rows, int columns, int with_borders)
 {
@@ -167,6 +168,60 @@ void write_cluster_statistics_to_file(const char * path,
     free(rows_string);
     free(columns_string);
     free(probability_string);
+    free(seed_string);
+    free(file_full_path);
+}
+
+void write_critical_point_search_results(const char * path,
+                                         double * critical_points,
+                                         int number_trials, int precision,
+                                         int rows, int columns,
+                                         double start_probability, int seed)
+{
+    int i;
+    size_t path_length;
+    size_t file_full_path_length;
+    char * file_full_path;
+    char * rows_string;
+    char * columns_string;
+    char * seed_string;
+    FILE * file_handler;
+
+    rows_string = (char *)malloc(12*sizeof(char));
+    sprintf(rows_string, "%d", rows);
+
+    columns_string = (char *)malloc(12*sizeof(char));
+    sprintf(columns_string, "%d", columns);
+
+    seed_string = (char *)malloc(12*sizeof(char));
+    sprintf(seed_string, "%d", seed);
+
+    path_length = strlen(path);
+    file_full_path_length  = path_length + 80;
+    file_full_path = (char *)malloc(file_full_path_length*sizeof(char));
+    strcpy(file_full_path, path);
+    strcat(file_full_path, "/critical_search_");
+    strcat(file_full_path, rows_string);
+    strcat(file_full_path, "x");
+    strcat(file_full_path, columns_string);
+    strcat(file_full_path, "_");
+    strcat(file_full_path, seed_string);
+    strcat(file_full_path, ".csv");
+
+    file_handler = fopen(file_full_path, "w");
+    fprintf(file_handler, ";rows:%d\n", rows);
+    fprintf(file_handler, ";columns:%d\n", columns);
+    fprintf(file_handler, ";seed:%d\n", seed);
+    fprintf(file_handler, ";pini:%.*e\n", DBL_DIG-1, start_probability);
+    fprintf(file_handler, ";ntrials:%d\n", number_trials);
+    fprintf(file_handler, ";precision:%d\n", precision);
+    for (i = 0; i < number_trials; i++) {
+        fprintf(file_handler, "%.*e\n", DBL_DIG-1, critical_points[i]);
+    }
+
+    fclose(file_handler);
+    free(rows_string);
+    free(columns_string);
     free(seed_string);
     free(file_full_path);
 }
