@@ -1,5 +1,6 @@
 #include "lattice.h"
 #include <stdlib.h>
+#include "random.h"
 
 int * allocate_lattice(int rows, int columns, int initialize)
 {
@@ -26,11 +27,11 @@ void populate_lattice(double probability, int * lattice, int rows, int columns,
     double q;
 
     if (seed > 0) {
-        srand(seed);
+        srand_pcg(seed);
     }
 
     for (i = 0; i < rows*columns; i++) {
-        q = ((double)rand())/RAND_MAX;
+        q = ((double)rand_pcg())/RAND_MAX_PCG;
         if (q <= probability) {
             lattice[i] = 1;
         } else {

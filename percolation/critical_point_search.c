@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <math.h>
 
+#include "random.h"
 #include "lattice.h"
 #include "clusters.h"
 #include "io_helpers.h"
@@ -48,7 +49,7 @@ int main(int argc, char ** argv)
     lattice = allocate_lattice(L, L, 0);
 
     /* initialzie RNG seed */
-    srand(random_seed);
+    srand_pcg(random_seed);
 
     /* search critical point */
     for (n = 0; n < N; n++) {
