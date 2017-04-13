@@ -52,20 +52,20 @@ void write_cluster_statistics_to_file(const char * path,
 
 /*! Write critical point search results to file.
 
-@param path path to the folder where the data will be written. If the file
-    exists it will be overwritten.
-@param critical_points pointer to array with the different estimated values of
-    the critical point.
-@param number_trials number of total trials performed to estimate the critical
-    point.
-@param precision the smallest step taken when searching for the critical point
-    is given by \f$1/2^{\mathrm{precision}}\f$.
-@param rows the number of rows in the lattice.
-@param columns the number of columns in the lattice.
-@param start_probability the inital probability used to search for the critical
-    point.
-@param seed the initial random number generator seed used to populate the
-    lattice.
+    @param path path to the folder where the data will be written. If the file
+        exists it will be overwritten.
+    @param critical_points pointer to array with the different estimated values
+        of the critical point.
+    @param number_trials number of total trials performed to estimate the
+        critical point.
+    @param precision the smallest step taken when searching for the critical
+        point is given by \f$1/2^{\mathrm{precision}}\f$.
+    @param rows the number of rows in the lattice.
+    @param columns the number of columns in the lattice.
+    @param start_probability the inital probability used to search for the
+        critical point.
+    @param seed the initial random number generator seed used to populate the
+        lattice.
 */
 void write_critical_point_search_results(const char * path,
                                          double * critical_points,
