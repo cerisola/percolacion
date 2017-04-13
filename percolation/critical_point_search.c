@@ -76,8 +76,10 @@ int main(int argc, char ** argv)
 
     p_critical_average = p_critical_average / N;
 
-    /* return estimated value */
+    /* return estimated value and write results to file */
     printf("p critical average: %f\n", p_critical_average);
+    write_critical_point_search_results("print/data", p_critical, N, precision,
+                                        L, L, 0.5, random_seed);
 
     /* free memory before leaving */
     free(p_critical);
