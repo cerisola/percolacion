@@ -4,6 +4,9 @@
     clusters in a lattice.
 */
 
+#ifndef CLUSTERS_H
+#define CLUSTERS_H
+
 /*!  Search for and label clusters in a lattice.
 
     This function implements the Hoshen-Kopelman algorithm [1] for labelling
@@ -57,3 +60,5 @@ char has_percolating_cluster(const int * lattice, int rows, int columns);
 void cluster_statistics(const int * lattice, int rows, int columns,
                         int * cluster_sizes_total_count, int ** cluster_sizes,
                         int ** cluster_sizes_counts, int * filled_count, int * empty_count);
+
+#endif /* CLUSTERS_H */

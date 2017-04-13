@@ -3,6 +3,9 @@
     @brief This file contains helper functions for printing lattices.
 */
 
+#ifndef IO_HELPERS_H
+#define IO_HELPERS_H
+
 /*! Print lattice to the standard output.
 
     @param lattice pointer to the lattice to be printed.
@@ -73,3 +76,5 @@ void write_critical_point_search_results(const char * path,
                                          int rows, int columns,
                                          double start_probability,
                                          unsigned int seed);
+
+#endif /* IO_HELPERS_H */

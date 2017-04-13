@@ -3,6 +3,9 @@
     @brief This file contains functions to create, populate and manage lattices.
 */
 
+#ifndef LATTICE_H
+#define LATTICE_H
+
 /*! Allocate lattice in memory.
 
     @param rows the number of rows in the lattice.
@@ -26,3 +29,5 @@ int * allocate_lattice(int rows, int columns, int initialize);
 */
 void populate_lattice(double probability, int * lattice, int rows, int columns,
                       unsigned int seed);
+
+#endif /* LATTICE_H */
