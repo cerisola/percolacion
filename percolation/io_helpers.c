@@ -69,7 +69,7 @@ void print_lattice(const int * lattice, int rows, int columns, int with_borders)
         written.
 */
 char * format_file_full_path(const char * path, const char * prefix, int rows,
-                           int columns, int seed)
+                           int columns, unsigned int seed)
 {
     size_t file_full_path_length;
     char * file_full_path;
@@ -82,7 +82,7 @@ char * format_file_full_path(const char * path, const char * prefix, int rows,
 }
 
 void write_lattice_to_file(const char * path, const int * lattice, int rows,
-                           int columns, double probability, int seed)
+                           int columns, double probability, unsigned int seed)
 {
     int i;
     int j;
@@ -118,7 +118,7 @@ void write_cluster_statistics_to_file(const char * path,
                                       const int * cluster_sizes_counts,
                                       int cluster_sizes_total_count,
                                       int percolated,  int rows, int columns,
-                                      double probability, int seed)
+                                      double probability, unsigned int seed)
 {
     int i;
     time_t current_time;
@@ -147,7 +147,8 @@ void write_critical_point_search_results(const char * path,
                                          double * critical_points,
                                          int number_trials, int precision,
                                          int rows, int columns,
-                                         double start_probability, int seed)
+                                         double start_probability,
+                                         unsigned int seed)
 {
     int i;
     time_t current_time;

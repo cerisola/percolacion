@@ -24,7 +24,7 @@ void print_lattice(const int * lattice, int rows, int columns, int with_borders)
     @param seed the random generator seed used to generate the lattice.
 */
 void write_lattice_to_file(const char * path, const int * lattice, int rows,
-                           int columns, double probability, int seed);
+                           int columns, double probability, unsigned int seed);
 
 /*! Write cluster statistics to file.
 
@@ -48,7 +48,7 @@ void write_cluster_statistics_to_file(const char * path,
                                       const int * cluster_sizes_counts,
                                       int cluster_sizes_total_count,
                                       int percolated, int rows, int columns,
-                                      double probability, int seed);
+                                      double probability, unsigned int seed);
 
 /*! Write critical point search results to file.
 
@@ -71,4 +71,5 @@ void write_critical_point_search_results(const char * path,
                                          double * critical_points,
                                          int number_trials, int precision,
                                          int rows, int columns,
-                                         double start_probability, int seed);
+                                         double start_probability,
+                                         unsigned int seed);
