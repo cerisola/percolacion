@@ -59,6 +59,7 @@ char has_percolating_cluster(const int * lattice, int rows, int columns);
 */
 void cluster_statistics(const int * lattice, int rows, int columns,
                         int * cluster_sizes_total_count, int ** cluster_sizes,
-                        int ** cluster_sizes_counts, int * filled_count, int * empty_count);
+                        int ** cluster_sizes_counts, int ** cluster_sizes_percolated,
+                        int * filled_count, int * empty_count);
 
 #endif /* CLUSTERS_H */

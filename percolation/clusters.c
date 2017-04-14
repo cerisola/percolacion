@@ -146,13 +146,16 @@ char has_percolating_cluster(const int * lattice, int rows, int columns)
 
 void cluster_statistics(const int * lattice, int rows, int columns,
                         int * cluster_sizes_total_count, int ** cluster_sizes,
-                        int ** cluster_sizes_counts, int * filled_count, int * empty_count)
+                        int ** cluster_sizes_counts, int ** cluster_sizes_percolated,
+                        int * filled_count, int * empty_count)
 {
     int i;
+    int j;
     int lattice_size;
     int cluster_labels_total_count; /* total number of different cluster labels */
     int * cluster_labels_indices; /* indices mapping each cluster label to a count value */
     int * cluster_labels_sizes; /* size of cluster for each label (via above index mapping */
+    char * cluster_labels_percolated; /* whether the matching cluster (labeled via the above index mapping) has percolated */
     int * cluster_sizes_indices; /* indices mapping for each cluster size to a size value */
 
     /* assign each label their total node count; stored via an index mapping */
@@ -182,15 +185,45 @@ void cluster_statistics(const int * lattice, int rows, int columns,
         cluster_labels_sizes[cluster_labels_indices[lattice[i]]] += 1;
     }
 
+    /* determine which clusters have percolated */
+    cluster_labels_percolated = (char *)malloc(cluster_labels_total_count*sizeof(char));
+    for (i = 0; i < cluster_labels_total_count; i++) {
+        cluster_labels_percolated[i] = 0;
+    }
+    /* compare first and last row labels */
+    for (i = 0; i < columns; i++) {
+        if (lattice[i] == 0) {
+            continue;
+        }
+        for (j = 0; j < columns; j++) {
+            if (lattice[i] == lattice[rows*(columns-1) + j]) {
+                cluster_labels_percolated[cluster_labels_indices[lattice[i]]] = 1;
+            }
+        }
+    }
+    /* compare first and last column labels */
+    for (i = 0; i < rows; i++) {
+        if (lattice[i*columns] == 0) {
+            continue;
+        }
+        for (j = 0; j < rows; j++) {
+            if (lattice[i*columns] == lattice[j*columns + columns - 1]) {
+                cluster_labels_percolated[cluster_labels_indices[lattice[i*columns]]] = 1;
+            }
+        }
+    }
+
     free(cluster_labels_indices);
 
     /* get count of each cluster size */
     *cluster_sizes_total_count = 0;
     *cluster_sizes = (int *)malloc(cluster_labels_total_count*sizeof(int));
     *cluster_sizes_counts = (int *)malloc(cluster_labels_total_count*sizeof(int));
+    *cluster_sizes_percolated = (int *)malloc(cluster_labels_total_count*sizeof(int));
     for (i = 0; i < cluster_labels_total_count; i++) {
         (*cluster_sizes)[i] = 0;
         (*cluster_sizes_counts)[i] = 0;
+        (*cluster_sizes_percolated)[i] = 0;
     }
     for (i = 0; i < cluster_labels_total_count; i++) {
         if (cluster_sizes_indices[cluster_labels_sizes[i]] < 0) {
@@ -199,13 +232,16 @@ void cluster_statistics(const int * lattice, int rows, int columns,
         }
         (*cluster_sizes)[cluster_sizes_indices[cluster_labels_sizes[i]]] = cluster_labels_sizes[i];
         (*cluster_sizes_counts)[cluster_sizes_indices[cluster_labels_sizes[i]]] += 1;
+        (*cluster_sizes_percolated)[cluster_sizes_indices[cluster_labels_sizes[i]]] += cluster_labels_percolated[i];
     }
 
     free(cluster_labels_sizes);
     free(cluster_sizes_indices);
+    free(cluster_labels_percolated);
 
     *cluster_sizes = realloc(*cluster_sizes, (*cluster_sizes_total_count)*sizeof(int));
     *cluster_sizes_counts = realloc(*cluster_sizes_counts, (*cluster_sizes_total_count)*sizeof(int));
+    *cluster_sizes_percolated = realloc(*cluster_sizes_percolated, (*cluster_sizes_total_count)*sizeof(int));
 
     /* calcualte auxilliary convenience values */
     *filled_count = 0;
