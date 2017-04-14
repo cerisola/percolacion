@@ -14,7 +14,7 @@ int main(int argc, char ** argv)
     double p; /* occupation probability of each lattice site */
     int *lattice; /* lattice array */
     unsigned int random_seed; /* random number generator seed */
-    char percolated;
+    char percolated; /* boolean flag indicating whether lattice has a percolating cluster */
     int cluster_sizes_total_count; /* total number of different cluster sizes */
     int *cluster_sizes_counts; /* count of clusters of a given size (paied in cluster_sizes) */
     int *cluster_sizes; /* sizes of clusters */
