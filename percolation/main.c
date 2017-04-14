@@ -66,6 +66,9 @@ int main(int argc, char ** argv)
 
     /* free memory before leaving */
     free(lattice);
+    free(cluster_sizes_counts);
+    free(cluster_sizes);
+    free(cluster_sizes_percolated);
 
     return 0;
 }
