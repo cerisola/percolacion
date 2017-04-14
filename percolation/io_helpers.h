@@ -42,8 +42,6 @@ void write_lattice_to_file(const char * path, const int * lattice, int rows,
     @param cluster_sizes_percolated how many percolating clusters there are of
         a given size (given by the respective element of the cluster_sizes
         parameter).
-    @param percolated boolean indicating whether the lattice has a percolating
-        cluster.
     @param rows the number of rows in the lattice.
     @param columns the number of columns in the lattice.
     @param probability the probability used to populate the lattice.
@@ -53,9 +51,9 @@ void write_cluster_statistics_to_file(const char * path,
                                       const int * cluster_sizes,
                                       const int * cluster_sizes_counts,
                                       const int * cluster_sizes_percolated,
-                                      int cluster_sizes_total_count,
-                                      int percolated, int rows, int columns,
-                                      double probability, unsigned int seed);
+                                      int cluster_sizes_total_count, int rows,
+                                      int columns, double probability,
+                                      unsigned int seed);
 
 /*! Write critical point search results to file.
 
