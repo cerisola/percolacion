@@ -44,10 +44,9 @@ char has_percolating_cluster(const int * lattice, int rows, int columns);
     @param columns the number of columns in the lattice.
     @param cluster_sizes_count pointer to integer where to store the total number
         of different cluster sizes present in the lattice.
-    @param cluster_sizes pointer to array where to store the sizes of the clusters.
-    @param sizes_counts pointer to array where to store the amount of clusters
-        that have the size given by the matching position in the cluster_sizes
-        array.
+    @param cluster_sizes array where to store the sizes of the clusters.
+    @param sizes_counts array where to store the amount of clusters that have
+        the size given by the matching position in the cluster_sizes array.
     @param filled_count pointer to integer where to store the total number of
         occupied nodes (optional).
     @param empty_count pointer to integer where to store the total number of

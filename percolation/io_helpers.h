@@ -35,13 +35,13 @@ void write_lattice_to_file(const char * path, const int * lattice, int rows,
         exists it will be overwritten.
     @param cluster_sizes pointer to array with the different values of cluster
         sizes.
-    @param cluster_sizes_counts pointer to array with the count of clusters that
-        have a given size (given by the respective element of the cluster_sizes
+    @param cluster_sizes_counts array with the count of clusters that have a
+        given size (given by the respective element of the cluster_sizes
         parameter).
+    @param cluster_sizes_percolated array indicating how many percolating
+        clusters there are of a given size (given by the respective element of
+        the cluster_sizes parameter).
     @param cluster_sizes_total_count total amount of different cluster sizes.
-    @param cluster_sizes_percolated how many percolating clusters there are of
-        a given size (given by the respective element of the cluster_sizes
-        parameter).
     @param rows the number of rows in the lattice.
     @param columns the number of columns in the lattice.
     @param probability the probability used to populate the lattice.
@@ -59,8 +59,8 @@ void write_cluster_statistics_to_file(const char * path,
 
     @param path path to the folder where the data will be written. If the file
         exists it will be overwritten.
-    @param critical_points pointer to array with the different estimated values
-        of the critical point.
+    @param critical_points array with the different estimated values of the
+        critical point.
     @param number_trials number of total trials performed to estimate the
         critical point.
     @param precision the smallest step taken when searching for the critical
