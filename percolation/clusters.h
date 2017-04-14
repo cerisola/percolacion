@@ -67,4 +67,35 @@ void cluster_statistics(const int * lattice, int rows, int columns,
                         int ** cluster_sizes_counts, int ** cluster_sizes_percolated,
                         int * filled_count, int * empty_count);
 
+/*! Aggregate cluster statistics results.
+
+    @param cluster_sizes_total_count_to_merge size of the statistics arrays to
+        be merged.
+    @param cluster_sizes_to_merge array with cluster sizes to be merged.
+    @param cluster_sizes_counts_to_merge array with cluster sizes counts to be
+        merged.
+    @param cluster_sizes_percolated_to_merge array with number of percolating
+        clusters to be merged.
+    @param cluster_sizes_total_count pointer to size of the other statistics
+        arrays to be merged. The value will be overwritten with that of the new
+        aggregated data.
+    @param cluster_sizes pointer to array with the other sizes of clusters to be
+        merged. The pointing array will be overwritten with that of the new
+        aggregated data.
+    @param cluster_sizes_counts pointer to array with the other sizes counts to
+        be merged. The pointing array will be overwritten with that of the new
+        aggregated data.
+    @param cluster_sizes_percolated pointer to array with the other percolating
+        clusters counts to be merged. The pointing array will be overwritten
+        with that of the new aggregated data.
+*/
+void aggregate_cluster_statistics(int cluster_sizes_total_count_to_merge,
+                                  const int * cluster_sizes_to_merge,
+                                  const int * cluster_sizes_counts_to_merge,
+                                  const int * cluster_sizes_percolated_to_merge,
+                                  int * cluster_sizes_total_count,
+                                  int ** cluster_sizes,
+                                  int ** cluster_sizes_counts,
+                                  int ** cluster_sizes_percolated);
+
 #endif /* CLUSTERS_H */

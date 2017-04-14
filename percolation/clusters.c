@@ -252,3 +252,45 @@ void cluster_statistics(const int * lattice, int rows, int columns,
         *empty_count = lattice_size - *filled_count;
     }
 }
+
+void aggregate_cluster_statistics(int cluster_sizes_total_count_to_merge,
+                                  const int * cluster_sizes_to_merge,
+                                  const int * cluster_sizes_counts_to_merge,
+                                  const int * cluster_sizes_percolated_to_merge,
+                                  int * cluster_sizes_total_count,
+                                  int ** cluster_sizes,
+                                  int ** cluster_sizes_counts,
+                                  int ** cluster_sizes_percolated)
+{
+    int i;
+    int j;
+    int tmp_size;
+    char shared;
+
+    tmp_size = (*cluster_sizes_total_count) + cluster_sizes_total_count_to_merge;
+    *cluster_sizes = realloc(*cluster_sizes, tmp_size*sizeof(int));
+    *cluster_sizes_counts = realloc(*cluster_sizes_counts, tmp_size*sizeof(int));
+    *cluster_sizes_percolated = realloc(*cluster_sizes_percolated, tmp_size*sizeof(int));
+
+    for (i = 0; i < cluster_sizes_total_count_to_merge; i++) {
+        shared = 0;
+        for (j = 0; j < *cluster_sizes_total_count; j++) {
+            if (cluster_sizes_to_merge[i] == (*cluster_sizes)[j]) {
+                shared = 1;
+                (*cluster_sizes_counts)[j] += cluster_sizes_counts_to_merge[i];
+                (*cluster_sizes_percolated)[j] += cluster_sizes_percolated_to_merge[i];
+                break;
+            }
+        }
+        if (!shared) {
+            (*cluster_sizes)[*cluster_sizes_total_count] = cluster_sizes_to_merge[i];
+            (*cluster_sizes_counts)[*cluster_sizes_total_count] = cluster_sizes_counts_to_merge[i];
+            (*cluster_sizes_percolated)[*cluster_sizes_total_count] = cluster_sizes_percolated_to_merge[i];
+            (*cluster_sizes_total_count) += 1;
+        }
+    }
+
+    *cluster_sizes = realloc(*cluster_sizes, (*cluster_sizes_total_count)*sizeof(int));
+    *cluster_sizes_counts = realloc(*cluster_sizes_counts, (*cluster_sizes_total_count)*sizeof(int));
+    *cluster_sizes_percolated = realloc(*cluster_sizes_percolated, (*cluster_sizes_total_count)*sizeof(int));
+}
