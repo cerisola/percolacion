@@ -244,9 +244,11 @@ void cluster_statistics(const int * lattice, int rows, int columns,
     *cluster_sizes_percolated = realloc(*cluster_sizes_percolated, (*cluster_sizes_total_count)*sizeof(int));
 
     /* calcualte auxilliary convenience values */
-    *filled_count = 0;
-    for (i = 0; i < *cluster_sizes_total_count; i++) {
-        *filled_count += ((*cluster_sizes)[i])*((*cluster_sizes_counts)[i]);
+    if (filled_count && empty_count) {
+        *filled_count = 0;
+        for (i = 0; i < *cluster_sizes_total_count; i++) {
+            *filled_count += ((*cluster_sizes)[i])*((*cluster_sizes_counts)[i]);
+        }
+        *empty_count = lattice_size - *filled_count;
     }
-    *empty_count = lattice_size - *filled_count;
 }

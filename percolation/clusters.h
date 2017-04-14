@@ -49,9 +49,14 @@ char has_percolating_cluster(const int * lattice, int rows, int columns);
         that have the size given by the matching position in the cluster_sizes
         array.
     @param filled_count pointer to integer where to store the total number of
-        occupied nodes.
+        occupied nodes (optional).
     @param empty_count pointer to integer where to store the total number of
-        empty nodes.
+        empty nodes (optional).
+
+    @note filled_count and empty_count are optional and their calculation can be
+        skipped by passing a NULL pointer. However, either both are returned or
+        neither. Therefore if only one pinter is NULL the other value won't be
+        calculated either.
 
     @warning cluster_sizes and cluster_sizes must be manually free'd by the user.
 
