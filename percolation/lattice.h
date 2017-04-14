@@ -16,7 +16,7 @@
     @note The lattice is allocated using row-major ordering.
     @warning The allocated lattice must be manually free'd by the user.
 */
-int * allocate_lattice(int rows, int columns, int initialize);
+int * allocate_lattice(int rows, int columns, char initialize);
 
 /*! Populate lattice with given probability.
 

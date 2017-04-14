@@ -5,7 +5,7 @@
 #include <float.h>
 #include <time.h>
 
-void print_lattice(const int * lattice, int rows, int columns, int with_borders)
+void print_lattice(const int * lattice, int rows, int columns, char with_borders)
 {
     int i, j;
 

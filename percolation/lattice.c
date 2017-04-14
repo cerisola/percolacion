@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "random.h"
 
-int * allocate_lattice(int rows, int columns, int initialize)
+int * allocate_lattice(int rows, int columns, char initialize)
 {
     int *lattice;
     int i;

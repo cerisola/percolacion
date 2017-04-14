@@ -14,7 +14,7 @@
     @param with_borders boolean to determine whether to print the lattice with
         borders around each cell.
 */
-void print_lattice(const int * lattice, int rows, int columns, int with_borders);
+void print_lattice(const int * lattice, int rows, int columns, char with_borders);
 
 /*! Write lattice to file.
 
