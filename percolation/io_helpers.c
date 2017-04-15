@@ -64,19 +64,20 @@ void print_lattice(const int * lattice, int rows, int columns, char with_borders
     @param columns the number of columns in the lattice.
     @param seed the initial random number generator seed used to populate the
         lattice.
+    @param other additional parameter to add to the file name.
 
     @returns pointer to array where the formatted file full path will be
         written.
 */
 char * format_file_full_path(const char * path, const char * prefix, int rows,
-                           int columns, unsigned int seed)
+                           int columns, unsigned int seed, const double other)
 {
     size_t file_full_path_length;
     char * file_full_path;
 
-    file_full_path_length = strlen(path) + strlen(prefix) + 120;
+    file_full_path_length = strlen(path) + strlen(prefix) + 160;
     file_full_path = (char *)malloc(file_full_path_length*sizeof(char));
-    sprintf(file_full_path, "%s/%s_%dx%d_%d.csv", path, prefix, rows, columns, seed);
+    sprintf(file_full_path, "%s/%s_%dx%d_%d_%.*e.csv", path, prefix, rows, columns, seed, DBL_DIG-1, other);
 
     return file_full_path;
 }
@@ -91,7 +92,7 @@ void write_lattice_to_file(const char * path, const int * lattice, int rows,
     FILE * file_handler;
 
     current_time = time(NULL);
-    file_full_path = format_file_full_path(path, "lattice", rows, columns, seed);
+    file_full_path = format_file_full_path(path, "lattice", rows, columns, seed, probability);
 
     file_handler = fopen(file_full_path, "w");
     fprintf(file_handler, ";rows:%d\n", rows);
@@ -128,7 +129,7 @@ void write_cluster_statistics_to_file(const char * path,
     FILE * file_handler;
 
     current_time = time(NULL);
-    file_full_path = format_file_full_path(path, "clusters", rows, columns, seed);
+    file_full_path = format_file_full_path(path, "clusters", rows, columns, seed, probability);
 
     file_handler = fopen(file_full_path, "w");
     fprintf(file_handler, ";rows:%d\n", rows);
@@ -162,7 +163,7 @@ void write_critical_point_search_results(const char * path,
     FILE * file_handler;
 
     current_time = time(NULL);
-    file_full_path = format_file_full_path(path, "critical_search", rows, columns, seed);
+    file_full_path = format_file_full_path(path, "critical_search", rows, columns, seed, number_trials);
 
     file_handler = fopen(file_full_path, "w");
     fprintf(file_handler, ";rows:%d\n", rows);
@@ -222,7 +223,7 @@ void write_probability_sweep_percolation_probability(const char * path,
     FILE * file_handler;
 
     current_time = time(NULL);
-    file_full_path = format_file_full_path(path, "percolation_probability", rows, columns, seed);
+    file_full_path = format_file_full_path(path, "percolation_probability", rows, columns, seed, grid_npoints);
 
     file_handler = fopen(file_full_path, "w");
     fprintf(file_handler, ";rows:%d\n", rows);
