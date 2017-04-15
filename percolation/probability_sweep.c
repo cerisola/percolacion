@@ -108,6 +108,17 @@ int main(int argc, char ** argv)
         }
 
         if (cluster_sizes_total_count_aggregated > 0) {
+            write_probability_sweep_cluster_statistics_to_file("print/data",
+                                                               cluster_sizes_aggregated,
+                                                               cluster_sizes_counts_aggregated,
+                                                               cluster_sizes_percolated_aggregated,
+                                                               cluster_sizes_total_count_aggregated,
+                                                               L, L, probability_grid[i],
+                                                               random_seed,
+                                                               nrepetitions, N,
+                                                               probability_center,
+                                                               decay);
+
             free(cluster_sizes_aggregated);
             free(cluster_sizes_counts_aggregated);
             free(cluster_sizes_percolated_aggregated);
@@ -119,6 +130,11 @@ int main(int argc, char ** argv)
             printf("finished with p_%d out of %d\n", i+1, N);
         }
     }
+
+    write_probability_sweep_percolation_probability("print/data", probability_grid,
+                                                    percolation_counts, N,
+                                                    probability_center, decay,
+                                                    nrepetitions, L, L, random_seed);
 
     /* free memory before leaving */
     free(lattice);
