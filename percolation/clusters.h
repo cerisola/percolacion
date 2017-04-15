@@ -2,6 +2,9 @@
     @file clusters.h
     @brief This file contains functions for searching, labelling and analyzing
     clusters in a lattice.
+
+    @author Federico Cerisola
+    @copyright MIT License.
 */
 
 #ifndef CLUSTERS_H

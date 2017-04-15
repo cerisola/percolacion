@@ -1,3 +1,7 @@
+/* Copyright 2017 Federico Cerisola */
+/* MIT License (see root directory) */
+/* see header file for detailed documentation of each function */
+
 #include "clusters.h"
 #include <stdlib.h>
 

@@ -1,3 +1,6 @@
+/* Copyright 2017 Federico Cerisola */
+/* MIT License (see root directory) */
+
 /* headers */
 #include <stdlib.h>
 #include <time.h>

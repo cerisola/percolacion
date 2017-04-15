@@ -1,6 +1,9 @@
 /*!
     @file lattice.h
     @brief This file contains functions to create, populate and manage lattices.
+
+    @author Federico Cerisola
+    @copyright MIT License.
 */
 
 #ifndef LATTICE_H

@@ -1,6 +1,9 @@
 /*!
     @file io_helpers.h
     @brief This file contains helper functions for printing lattices.
+
+    @author Federico Cerisola
+    @copyright MIT License.
 */
 
 #ifndef IO_HELPERS_H
