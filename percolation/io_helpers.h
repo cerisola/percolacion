@@ -100,7 +100,7 @@ void write_critical_point_search_results(const char * path,
     @param rows the number of rows in the lattice.
     @param columns the number of columns in the lattice.
     @param probability the probability used to populate the lattice.
-    @param seed the random number generator seed used at the begging of the
+    @param seed the random number generator seed used at the beginning of the
         probability sweep.
     @param realizations the number of different lattice realizations that were
         taken to aggregate the cluster statistics.
