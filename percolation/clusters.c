@@ -4,6 +4,7 @@
 
 #include "clusters.h"
 #include <stdlib.h>
+#include <string.h>
 
 void label_clusters(int * lattice, int rows, int columns)
 {
@@ -270,6 +271,21 @@ void aggregate_cluster_statistics(int cluster_sizes_total_count_to_merge,
     int j;
     int tmp_size;
     char shared;
+
+    if (cluster_sizes_total_count_to_merge == 0 || cluster_sizes_to_merge == NULL) {
+        return;
+    }
+
+    if (*cluster_sizes_total_count == 0 || *cluster_sizes == NULL) {
+        *cluster_sizes_total_count = cluster_sizes_total_count_to_merge;
+        *cluster_sizes = (int *)malloc((*cluster_sizes_total_count)*sizeof(int));
+        *cluster_sizes_counts = (int *)malloc((*cluster_sizes_total_count)*sizeof(int));
+        *cluster_sizes_percolated = (int *)malloc((*cluster_sizes_total_count)*sizeof(int));
+        memcpy(*cluster_sizes, cluster_sizes_to_merge, (*cluster_sizes_total_count)*sizeof(int));
+        memcpy(*cluster_sizes_counts, cluster_sizes_counts_to_merge, (*cluster_sizes_total_count)*sizeof(int));
+        memcpy(*cluster_sizes_percolated, cluster_sizes_percolated_to_merge, (*cluster_sizes_total_count)*sizeof(int));
+        return;
+    }
 
     tmp_size = (*cluster_sizes_total_count) + cluster_sizes_total_count_to_merge;
     *cluster_sizes = realloc(*cluster_sizes, tmp_size*sizeof(int));
