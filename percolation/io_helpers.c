@@ -205,3 +205,39 @@ void write_probability_sweep_cluster_statistics_to_file(const char * path,
                                      other);
     free(other);
 }
+
+void write_probability_sweep_percolation_probability(const char * path,
+                                                     const double * probability_grid,
+                                                     const int * percolation_counts,
+                                                     int grid_npoints,
+                                                     double probability_center,
+                                                     double decay,
+                                                     int realizations,
+                                                     int rows, int columns,
+                                                     unsigned int seed)
+{
+    int i;
+    time_t current_time;
+    char * file_full_path;
+    FILE * file_handler;
+
+    current_time = time(NULL);
+    file_full_path = format_file_full_path(path, "percolation_probability", rows, columns, seed);
+
+    file_handler = fopen(file_full_path, "w");
+    fprintf(file_handler, ";rows:%d\n", rows);
+    fprintf(file_handler, ";columns:%d\n", columns);
+    fprintf(file_handler, ";seed:%d\n", seed);
+    fprintf(file_handler, ";grid_npoints:%d\n", grid_npoints);
+    fprintf(file_handler, ";grid_center:%.*e\n", DBL_DIG-1, probability_center);
+    fprintf(file_handler, ";grid_decay:%.*e\n", DBL_DIG-1, decay);
+    fprintf(file_handler, ";realizations:%d\n", realizations);
+    fprintf(file_handler, ";date:%s", asctime(localtime(&current_time)));
+    for (i = 0; i < grid_npoints; i++) {
+        fprintf(file_handler, "%.*e,%d,%.*e\n", DBL_DIG-1, probability_grid[i],
+                percolation_counts[i], DBL_DIG-1, ((double)percolation_counts[i])/realizations);
+    }
+
+    fclose(file_handler);
+    free(file_full_path);
+}

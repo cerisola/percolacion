@@ -121,4 +121,30 @@ void write_probability_sweep_cluster_statistics_to_file(const char * path,
                                                         double probability_center,
                                                         double decay);
 
+/*! Write the percolation probability obtained during a probability sweep to a file.
+
+    @param path path to the folder where the data will be written. If the file
+        exists it will be overwritten.
+    @param probability_grid the population probabilities tested.
+    @param percolation_counts how many times each probability produced a
+        percolating cluster.
+    @param grid_npoints the number of points in the probability grid.
+    @param probability_center the central probability of the exponential grid.
+    @param decay the exponential decay coefficient of the grid.
+    @param realizations how many times each probability was tested.
+    @param rows the number of rows in the lattice.
+    @param columns the number of columns in the lattice.
+    @param seed the random number generator seed used at the beginning of the
+        probability sweep.
+*/
+void write_probability_sweep_percolation_probability(const char * path,
+                                                     const double * probability_grid,
+                                                     const int * percolation_counts,
+                                                     int grid_npoints,
+                                                     double probability_center,
+                                                     double decay,
+                                                     int realizations,
+                                                     int rows, int columns,
+                                                     unsigned int seed);
+
 #endif /* IO_HELPERS_H */
