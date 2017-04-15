@@ -137,7 +137,7 @@ void write_cluster_statistics_to_file(const char * path,
     fprintf(file_handler, ";probability:%.*e\n", DBL_DIG-1, probability);
     fprintf(file_handler, ";realizations:%d\n", realizations);
     if (other) {
-        fprintf(file_handler, "%s\n", other);
+        fprintf(file_handler, "%s", other);
     }
     fprintf(file_handler, ";date:%s", asctime(localtime(&current_time)));
     for (i = 0; i < cluster_sizes_total_count; i++) {
