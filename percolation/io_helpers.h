@@ -84,4 +84,41 @@ void write_critical_point_search_results(const char * path,
                                          double start_probability,
                                          unsigned int seed);
 
+/*! Write cluster statistics generated during a probability sweep to file.
+
+    @param path path to the folder where the data will be written. If the file
+        exists it will be overwritten.
+    @param cluster_sizes pointer to array with the different values of cluster
+        sizes.
+    @param cluster_sizes_counts array with the count of clusters that have a
+        given size (given by the respective element of the cluster_sizes
+        parameter).
+    @param cluster_sizes_percolated array indicating how many percolating
+        clusters there are of a given size (given by the respective element of
+        the cluster_sizes parameter).
+    @param cluster_sizes_total_count total amount of different cluster sizes.
+    @param rows the number of rows in the lattice.
+    @param columns the number of columns in the lattice.
+    @param probability the probability used to populate the lattice.
+    @param seed the random number generator seed used at the begging of the
+        probability sweep.
+    @param realizations the number of different lattice realizations that were
+        taken to aggregate the cluster statistics.
+    @param grid_points the number of points in the probability grid.
+    @param probability_center center of the probability grid.
+    @param decay exponential decay coefficient of the probability grid.
+*/
+void write_probability_sweep_cluster_statistics_to_file(const char * path,
+                                                        const int * cluster_sizes,
+                                                        const int * cluster_sizes_counts,
+                                                        const int * cluster_sizes_percolated,
+                                                        int cluster_sizes_total_count,
+                                                        int rows, int columns,
+                                                        double probability,
+                                                        unsigned int seed,
+                                                        int realizations,
+                                                        int grid_points,
+                                                        double probability_center,
+                                                        double decay);
+
 #endif /* IO_HELPERS_H */

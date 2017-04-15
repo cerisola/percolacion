@@ -179,3 +179,29 @@ void write_critical_point_search_results(const char * path,
     fclose(file_handler);
     free(file_full_path);
 }
+
+void write_probability_sweep_cluster_statistics_to_file(const char * path,
+                                                        const int * cluster_sizes,
+                                                        const int * cluster_sizes_counts,
+                                                        const int * cluster_sizes_percolated,
+                                                        int cluster_sizes_total_count,
+                                                        int rows, int columns,
+                                                        double probability,
+                                                        unsigned int seed,
+                                                        int realizations,
+                                                        int grid_points,
+                                                        double probability_center,
+                                                        double decay)
+{
+    char * other;
+
+    other = (char *)malloc(140*sizeof(char));
+    sprintf(other, ";source:probability_sweep\n;grid_npoints:%d\n;grid_center:%.*e\n;grid_decay:%.*e\n",
+            grid_points, DBL_DIG-1, probability_center, DBL_DIG-1, decay);
+
+    write_cluster_statistics_to_file(path, cluster_sizes, cluster_sizes_counts,
+                                     cluster_sizes_percolated, cluster_sizes_total_count,
+                                     rows, columns, probability, seed, realizations,
+                                     other);
+    free(other);
+}
