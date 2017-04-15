@@ -46,6 +46,8 @@ void write_lattice_to_file(const char * path, const int * lattice, int rows,
     @param columns the number of columns in the lattice.
     @param probability the probability used to populate the lattice.
     @param seed the random number generator seed used to generate the lattice.
+    @param other additional information that should be writter to the output
+        file header (optional, pass NULL if none is needed).
 */
 void write_cluster_statistics_to_file(const char * path,
                                       const int * cluster_sizes,
@@ -53,7 +55,7 @@ void write_cluster_statistics_to_file(const char * path,
                                       const int * cluster_sizes_percolated,
                                       int cluster_sizes_total_count, int rows,
                                       int columns, double probability,
-                                      unsigned int seed);
+                                      unsigned int seed, const char * other);
 
 /*! Write critical point search results to file.
 

@@ -119,7 +119,7 @@ void write_cluster_statistics_to_file(const char * path,
                                       const int * cluster_sizes_percolated,
                                       int cluster_sizes_total_count, int rows,
                                       int columns, double probability,
-                                      unsigned int seed)
+                                      unsigned int seed, const char * other)
 {
     int i;
     time_t current_time;
@@ -134,6 +134,9 @@ void write_cluster_statistics_to_file(const char * path,
     fprintf(file_handler, ";columns:%d\n", columns);
     fprintf(file_handler, ";seed:%d\n", seed);
     fprintf(file_handler, ";probability:%.*e\n", DBL_DIG-1, probability);
+    if (other) {
+        fprintf(file_handler, "%s\n", other);
+    }
     fprintf(file_handler, ";date:%s", asctime(localtime(&current_time)));
     for (i = 0; i < cluster_sizes_total_count; i++) {
         fprintf(file_handler, "%d,%d,%d\n", cluster_sizes[i], cluster_sizes_counts[i],
