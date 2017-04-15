@@ -31,8 +31,10 @@ int main(int argc, char ** argv)
     double decay; /* exponential decay coefficient of the probability grid */
     double * probability_grid; /* discrete grid of probability values to test */
     int nrepetitions; /* how many repetitions to take for each probability */
+    int * percolation_counts; /* how many times a given population probability generates a percolating cluster */
     int n;
     int i;
+    int j;
 
     /* read input arguments; if none provided fallback to default values */
     if (argc == 6 || argc == 7) {
@@ -66,6 +68,10 @@ int main(int argc, char ** argv)
     cluster_sizes_percolated_aggregated = NULL;
 
     probability_grid = create_exponential_centered_grid(0, 1, probability_center, N, decay);
+    percolation_counts = (int *)malloc(N*sizeof(int));
+    for (i = 0; i < N; i++) {
+        percolation_counts[i] = 0;
+    }
 
     srand_pcg(random_seed);
 
@@ -86,6 +92,14 @@ int main(int argc, char ** argv)
                                          &cluster_sizes_aggregated,
                                          &cluster_sizes_counts_aggregated,
                                          &cluster_sizes_percolated_aggregated);
+
+            /* add one if this lattice has a percolating cluster */
+            for (j = 0; j < cluster_sizes_total_count; j++) {
+                if (cluster_sizes_percolated[j]) {
+                    percolation_counts[i] += 1;
+                    break;
+                }
+            }
 
             free(cluster_sizes);
             free(cluster_sizes_counts);
@@ -109,6 +123,7 @@ int main(int argc, char ** argv)
     /* free memory before leaving */
     free(lattice);
     free(probability_grid);
+    free(percolation_counts);
 
     return 0;
 }
