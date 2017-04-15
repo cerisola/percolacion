@@ -86,6 +86,18 @@ int main(int argc, char ** argv)
                                          &cluster_sizes_aggregated,
                                          &cluster_sizes_counts_aggregated,
                                          &cluster_sizes_percolated_aggregated);
+
+            free(cluster_sizes);
+            free(cluster_sizes_counts);
+            free(cluster_sizes_percolated);
+            cluster_sizes_total_count = 0;
+        }
+
+        if (cluster_sizes_total_count_aggregated > 0) {
+            free(cluster_sizes_aggregated);
+            free(cluster_sizes_counts_aggregated);
+            free(cluster_sizes_percolated_aggregated);
+            cluster_sizes_total_count_aggregated = 0;
         }
 
         /* print progress to stdout */
@@ -96,12 +108,6 @@ int main(int argc, char ** argv)
 
     /* free memory before leaving */
     free(lattice);
-    free(cluster_sizes);
-    free(cluster_sizes_counts);
-    free(cluster_sizes_percolated);
-    free(cluster_sizes_aggregated);
-    free(cluster_sizes_counts_aggregated);
-    free(cluster_sizes_percolated_aggregated);
     free(probability_grid);
 
     return 0;
