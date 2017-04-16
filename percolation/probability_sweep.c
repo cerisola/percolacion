@@ -32,6 +32,7 @@ int main(int argc, char ** argv)
     double * probability_grid; /* discrete grid of probability values to test */
     int nrepetitions; /* how many repetitions to take for each probability */
     int * percolation_counts; /* how many times a given population probability generates a percolating cluster */
+    int output_interval;
     int n;
     int i;
     int j;
@@ -72,6 +73,8 @@ int main(int argc, char ** argv)
     for (i = 0; i < N; i++) {
         percolation_counts[i] = 0;
     }
+
+    output_interval = N / 10;
 
     srand_pcg(random_seed);
 
@@ -126,7 +129,7 @@ int main(int argc, char ** argv)
         }
 
         /* print progress to stdout */
-        if ((i+1) % 20 == 0) {
+        if ((i+1) % output_interval == 0) {
             printf("finished with p_%d out of %d\n", i+1, N);
         }
     }

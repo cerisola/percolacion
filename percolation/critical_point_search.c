@@ -26,6 +26,7 @@ int main(int argc, char ** argv)
     double p; /* occupation probability of each lattice site */
     int * lattice; /* lattice array */
     char percolated; /* whether the lattice has percolated */
+    int output_interval;
 
     /* read input arguments; if none provided fallback to default values */
     if (argc == 4 || argc == 5) {
@@ -47,6 +48,8 @@ int main(int argc, char ** argv)
     /* initialilze variable values */
     p_critical = (double *)malloc(N*sizeof(double));
     p_critical_average = 0;
+
+    output_interval = N / 10;
 
     /* allocate lattice without initializing its values */
     lattice = allocate_lattice(L, L, 0);
@@ -73,7 +76,7 @@ int main(int argc, char ** argv)
         p_critical_average += p;
 
         /* progress report to stdout */
-        if ((n+1) % 100 == 0) {
+        if ((n+1) % output_interval == 0) {
             printf("finished iter %d/%d\n", n+1, N);
         }
     }
