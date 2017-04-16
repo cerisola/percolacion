@@ -166,10 +166,10 @@ void cluster_statistics(const int * lattice, int rows, int columns,
     /* assign each label their total node count; stored via an index mapping */
     lattice_size = rows*columns;
     cluster_labels_total_count = 0;
-    cluster_labels_indices = (int *)malloc((lattice_size/2)*sizeof(int));
-    cluster_labels_sizes = (int *)malloc((lattice_size/2)*sizeof(int));
-    cluster_sizes_indices = (int *)malloc((lattice_size)*sizeof(int));
-    for (i = 0; i < lattice_size/2; i++) {
+    cluster_labels_indices = (int *)malloc((lattice_size/2 + 2)*sizeof(int));
+    cluster_labels_sizes = (int *)malloc((lattice_size/2 + 2)*sizeof(int));
+    cluster_sizes_indices = (int *)malloc((lattice_size + 1)*sizeof(int));
+    for (i = 0; i < lattice_size/2 + 2; i++) {
         cluster_labels_indices[i] = -1;
         cluster_labels_sizes[i] = 0;
     }
@@ -189,6 +189,8 @@ void cluster_statistics(const int * lattice, int rows, int columns,
         }
         cluster_labels_sizes[cluster_labels_indices[lattice[i]]] += 1;
     }
+    /* finish initialization */
+    cluster_sizes_indices[lattice_size] = -1;
 
     /* determine which clusters have percolated */
     cluster_labels_percolated = (char *)malloc(cluster_labels_total_count*sizeof(char));
