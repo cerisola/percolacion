@@ -19,8 +19,8 @@ void label_clusters(int * lattice, int rows, int columns)
     lattice_size = rows*columns;
 
     /* allocate and initialize auxilliary label storing array */
-    labels = (int *) malloc((lattice_size/2 + 2)*sizeof(int));
-    for (i = 0; i < lattice_size/2 + 2; i++) {
+    labels = (int *) malloc((lattice_size/2 + 3)*sizeof(int));
+    for (i = 0; i < lattice_size/2 + 3; i++) {
         labels[i] = i;
     }
 
@@ -166,10 +166,10 @@ void cluster_statistics(const int * lattice, int rows, int columns,
     /* assign each label their total node count; stored via an index mapping */
     lattice_size = rows*columns;
     cluster_labels_total_count = 0;
-    cluster_labels_indices = (int *)malloc((lattice_size/2 + 2)*sizeof(int));
-    cluster_labels_sizes = (int *)malloc((lattice_size/2 + 2)*sizeof(int));
+    cluster_labels_indices = (int *)malloc((lattice_size/2 + 3)*sizeof(int));
+    cluster_labels_sizes = (int *)malloc((lattice_size/2 + 3)*sizeof(int));
     cluster_sizes_indices = (int *)malloc((lattice_size + 1)*sizeof(int));
-    for (i = 0; i < lattice_size/2 + 2; i++) {
+    for (i = 0; i < lattice_size/2 + 3; i++) {
         cluster_labels_indices[i] = -1;
         cluster_labels_sizes[i] = 0;
     }
