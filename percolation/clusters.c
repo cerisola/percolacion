@@ -20,7 +20,7 @@ void label_clusters(int * lattice, int rows, int columns)
 
     /* allocate and initialize auxilliary label storing array */
     labels = (int *) malloc((lattice_size/2 + 2)*sizeof(int));
-    for (i = 0; i < lattice_size/2; i++) {
+    for (i = 0; i < lattice_size/2 + 2; i++) {
         labels[i] = i;
     }
 
