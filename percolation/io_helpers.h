@@ -63,7 +63,7 @@ void write_cluster_statistics_to_file(const char * path,
                                       unsigned int seed, int realizations,
                                       const char * other);
 
-/*! Write critical point search results to file.
+/*! Write critical point search via bisection results to file.
 
     @param path path to the folder where the data will be written. If the file
         exists it will be overwritten.
@@ -80,12 +80,12 @@ void write_cluster_statistics_to_file(const char * path,
     @param seed the initial random number generator seed used to populate the
         lattice.
 */
-void write_critical_point_search_results(const char * path,
-                                         double * critical_points,
-                                         int number_trials, int precision,
-                                         int rows, int columns,
-                                         double start_probability,
-                                         unsigned int seed);
+void write_critical_point_bisection_search_results(const char * path,
+                                                   double * critical_points,
+                                                   int number_trials, int precision,
+                                                   int rows, int columns,
+                                                   double start_probability,
+                                                   unsigned int seed);
 
 /*! Write cluster statistics generated during a probability sweep to file.
 

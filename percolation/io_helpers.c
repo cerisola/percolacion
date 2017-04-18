@@ -154,12 +154,12 @@ void write_cluster_statistics_to_file(const char * path,
     free(file_full_path);
 }
 
-void write_critical_point_search_results(const char * path,
-                                         double * critical_points,
-                                         int number_trials, int precision,
-                                         int rows, int columns,
-                                         double start_probability,
-                                         unsigned int seed)
+void write_critical_point_bisection_search_results(const char * path,
+                                                   double * critical_points,
+                                                   int number_trials, int precision,
+                                                   int rows, int columns,
+                                                   double start_probability,
+                                                   unsigned int seed)
 {
     int i;
     time_t current_time;
@@ -167,7 +167,7 @@ void write_critical_point_search_results(const char * path,
     FILE * file_handler;
 
     current_time = time(NULL);
-    file_full_path = format_file_full_path(path, "critical_search", rows, columns, seed, number_trials);
+    file_full_path = format_file_full_path(path, "critical_bisection_search", rows, columns, seed, number_trials);
 
     file_handler = fopen(file_full_path, "w");
     fprintf(file_handler, ";rows:%d\n", rows);
