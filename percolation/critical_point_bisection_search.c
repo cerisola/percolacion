@@ -54,14 +54,12 @@ int main(int argc, char ** argv)
     /* allocate lattice without initializing its values */
     lattice = allocate_lattice(L, L, 0);
 
-    /* initialzie RNG seed */
-    srand_pcg(random_seed);
-
     /* search critical point */
     for (n = 0; n < N; n++) {
         p = 0.5;
 
         for (i = 2; i <= precision; i++) {
+            srand_pcg(random_seed);
             populate_lattice(p, lattice, L, L, 0);
             label_clusters(lattice, L, L);
             percolated = has_percolating_cluster(lattice, L, L);
@@ -74,6 +72,8 @@ int main(int argc, char ** argv)
 
         p_critical[n] = p;
         p_critical_average += p;
+
+        random_seed = rand_pcg();
 
         /* progress report to stdout */
         if ((n+1) % output_interval == 0) {
