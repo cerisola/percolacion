@@ -76,9 +76,10 @@ def get_probability_sweep_file_list(path, L=None, p_occupation=None):
 
 def load_probability_sweep_file(file_name):
     L = 0
-    nsamples = 0
     p_occupation = []
     n_percolation = []
+    nsamples = []
+    nsamples_common = 0
     p_percolation = []
     with open(file_name) as f:
         for line in f:
@@ -87,27 +88,33 @@ def load_probability_sweep_file(file_name):
                 L = int(m.group(1))
             elif line.startswith(';realizations'):
                 m = re.search(';realizations:(?P<realizations>\d+)', line)
-                nsamples = int(m.group(1))
+                nsamples_common = int(m.group(1))
             elif not line.startswith(';'):
                 columns = line.split(',')
                 p_occupation.append(float(columns[0]))
                 n_percolation.append(int(columns[1]))
-                p_percolation.append(float(columns[2]))
+                if len(columns) == 3:
+                    nsamples.append(nsamples_common)
+                    p_percolation.append(float(columns[2]))
+                else:
+                    nsamples.append(int(columns[2]))
+                    p_percolation.append(float(columns[3]))
     p_occupation = np.asarray(p_occupation)
     n_percolation = np.asarray(n_percolation)
+    nsamples = np.asarray(nsamples)
     p_percolation = np.asarray(p_percolation)
-    return p_occupation, p_percolation, n_percolation, L, nsamples
+    return p_occupation, p_percolation, n_percolation, nsamples, L
 
 
 def load_probability_sweep_file_list(files):
     data = [load_probability_sweep_file(f) for f in files]
-    data = sorted(data, key=itemgetter(3, 4))
+    data = sorted(data, key=itemgetter(4))
     p_occupation = [d[0] for d in data]
     p_percolation = [d[1] for d in data]
     n_percolation = [d[2] for d in data]
-    L = np.array([d[3] for d in data])
-    nsamples = np.array([d[4] for d in data])
-    return p_occupation, p_percolation, n_percolation, L, nsamples
+    nsamples = [d[3] for d in data]
+    L = np.array([d[4] for d in data])
+    return p_occupation, p_percolation, n_percolation, nsamples, L
 
 
 # % Bisection Search % #

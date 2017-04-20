@@ -91,7 +91,7 @@ if not save_figures:
 
 files_root_prefix = 'print/data/probability_sweep/v5/'
 files = load_data.get_probability_sweep_file_list(files_root_prefix)
-p_occupation, p_percolation, _, L, nsamples = load_data.load_probability_sweep_file_list(files)
+p_occupation, p_percolation, _, nsamples, L = load_data.load_probability_sweep_file_list(files)
 plot_critical_probability_statistics(p_occupation, p_percolation, L, nsamples)
 
 plot_percolation_probability(p_occupation[15], p_percolation[15], L[15], nsamples[15])
