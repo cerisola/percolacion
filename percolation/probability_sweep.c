@@ -52,6 +52,7 @@ int main(int argc, char ** argv)
     time_t start_time;
     time_t current_time;
     double probability_estimation;
+    int nrepetitions_estimation;
     int n;
     int i;
     int j;
@@ -135,8 +136,8 @@ int main(int argc, char ** argv)
 
             if (n == nrepetitions - 1) {
                 probability_estimation = ((double)percolation_counts[i])/nrepetitions;
-                nrepetitions = samples_for_target_ci(probability_estimation, target_error, Z);
-                nrepetitions = nrepetitions > min_repetitions ? nrepetitions : min_repetitions;
+                nrepetitions_estimation = samples_for_target_ci(probability_estimation, target_error, Z);
+                nrepetitions = nrepetitions_estimation > nrepetitions ? nrepetitions_estimation : nrepetitions;
                 time_check_interval = nrepetitions / 100;
                 printf("adjusting repetitions to %d for i = %d with p = %3f using Z = %f\n",
                        nrepetitions, i, probability_estimation, Z);
