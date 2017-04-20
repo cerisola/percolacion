@@ -38,6 +38,7 @@ int main(int argc, char ** argv)
     int N; /* number of discrete probability value to tests */
     double probability_center; /* value where to center the discrete probability values grid */
     double decay; /* exponential decay coefficient of the probability grid */
+    int grid_rounding_digits; /* to how many digits should the probabilities in the grid be rounded to */
     double * probability_grid; /* discrete grid of probability values to test */
     int min_repetitions; /* minimum number repetitions to take for each probability */
     int nrepetitions; /* the number of repetitions to take for each probability */
@@ -58,22 +59,23 @@ int main(int argc, char ** argv)
     int j;
 
     /* read input arguments; if none provided fallback to default values */
-    if (argc < 9) {
-        printf("usage: L ngrid pcenter decay mintrials error ci maxtime (seed)\n");
+    if (argc < 10) {
+        printf("usage: L ngrid pcenter decay rounding mintrials error ci maxtime (seed)\n");
         return 1;
     }
     L = atoi(argv[1]);
     N = atoi(argv[2]);
     probability_center = atof(argv[3]);
     decay = atof(argv[4]);
-    min_repetitions = atoi(argv[5]);
-    target_error = atof(argv[6]);
-    ci = argv[7];
+    grid_rounding_digits = atoi(argv[5]);
+    min_repetitions = atoi(argv[6]);
+    target_error = atof(argv[7]);
+    ci = argv[8];
     printf("ci = %s\n", ci);
     Z = Z_normal(ci);
-    maxtime = atol(argv[8]);
-    if (argc == 10) {
-        random_seed = atoi(argv[9]);
+    maxtime = atol(argv[9]);
+    if (argc == 11) {
+        random_seed = atoi(argv[10]);
     } else {
         random_seed = (unsigned int)time(NULL);
     }
@@ -88,7 +90,7 @@ int main(int argc, char ** argv)
     cluster_sizes_counts_aggregated = NULL;
     cluster_sizes_percolated_aggregated = NULL;
 
-    probability_grid = create_exponential_centered_grid(0, 1, probability_center, N, decay);
+    probability_grid = create_exponential_centered_grid(0, 1, probability_center, N, decay, grid_rounding_digits);
     percolation_counts = (int *)malloc(N*sizeof(int));
     nrepetitions_final = (int *)malloc(N*sizeof(int));
     for (i = 0; i < N; i++) {
@@ -139,14 +141,14 @@ int main(int argc, char ** argv)
                 nrepetitions_estimation = samples_for_target_ci(probability_estimation, target_error, Z);
                 nrepetitions = nrepetitions_estimation > nrepetitions ? nrepetitions_estimation : nrepetitions;
                 time_check_interval = nrepetitions / 100;
-                printf("adjusting repetitions to %d for i = %d with p = %3f using Z = %f\n",
-                       nrepetitions, i, probability_estimation, Z);
+                /*printf("adjusting repetitions to %d for i = %d with p = %3f using Z = %f\n",
+                       nrepetitions, i, probability_estimation, Z);*/
             }
 
             if ((n+1) % time_check_interval == 0) {
                 current_time = time(NULL);
                 if (current_time - start_time > maxtime) {
-                    printf("aborting due to excess time ...\n");
+                    printf("WARNING: aborting due to excess time ...\n");
                     nrepetitions = n+1;
                     break;
                 }

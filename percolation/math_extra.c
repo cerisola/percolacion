@@ -7,7 +7,7 @@
 
 double * create_exponential_centered_grid(const double xmin, const double xmax,
                                           const double xcenter, const int npoints,
-                                          const double decay)
+                                          const double decay, int round_digits)
 {
     int n;
     double * grid;
@@ -31,6 +31,12 @@ double * create_exponential_centered_grid(const double xmin, const double xmax,
             grid[n] = A_left*(exp(-B_left*n) - 1.0) + xmin;
         } else {
             grid[n] = A_right*(exp(B_right*(n-M)) - 1.0) + xcenter;
+        }
+    }
+
+    if (round_digits) {
+        for (n = 0; n < npoints; n++) {
+            grid[n] = ((int)(grid[n]*((int)pow(10, round_digits))))/((double)pow(10, round_digits));
         }
     }
 
