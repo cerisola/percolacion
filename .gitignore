@@ -1,2 +1,4 @@
 build/
 *.o
+print/
+__pycache__

@@ -217,7 +217,7 @@ void write_probability_sweep_percolation_probability(const char * path,
                                                      int grid_npoints,
                                                      double probability_center,
                                                      double decay,
-                                                     int realizations,
+                                                     int * realizations,
                                                      int rows, int columns,
                                                      unsigned int seed)
 {
@@ -236,11 +236,11 @@ void write_probability_sweep_percolation_probability(const char * path,
     fprintf(file_handler, ";grid_npoints:%d\n", grid_npoints);
     fprintf(file_handler, ";grid_center:%.*e\n", DBL_DIG-1, probability_center);
     fprintf(file_handler, ";grid_decay:%.*e\n", DBL_DIG-1, decay);
-    fprintf(file_handler, ";realizations:%d\n", realizations);
     fprintf(file_handler, ";date:%s", asctime(localtime(&current_time)));
     for (i = 0; i < grid_npoints; i++) {
-        fprintf(file_handler, "%.*e,%d,%.*e\n", DBL_DIG-1, probability_grid[i],
-                percolation_counts[i], DBL_DIG-1, ((double)percolation_counts[i])/realizations);
+        fprintf(file_handler, "%.*e,%d,%d,%.*e\n", DBL_DIG-1, probability_grid[i],
+                percolation_counts[i], realizations[i],
+                DBL_DIG-1, ((double)percolation_counts[i])/realizations[i]);
     }
 
     fclose(file_handler);

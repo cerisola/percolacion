@@ -12,10 +12,10 @@ save_figures = False
 files_root_prefix = 'print/data/probability_sweep/vdbg/'
 L = 64
 file_name = load_data.get_probability_sweep_file_list(files_root_prefix, L=L)[0]
-p, P, _, _, nsamples = load_data.load_probability_sweep_file(file_name)
+p, P, _, nsamples, _ = load_data.load_probability_sweep_file(file_name)
 
 ci = '99.9'
-stderr = common.binomial_sem(P, nsamples)
+stderr = common.binomial_sem(P, nsamples, ci=ci)
 Pm = np.maximum(P - stderr, 0)
 Pp = np.minimum(P + stderr, 1)
 

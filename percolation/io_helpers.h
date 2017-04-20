@@ -146,7 +146,7 @@ void write_probability_sweep_percolation_probability(const char * path,
                                                      int grid_npoints,
                                                      double probability_center,
                                                      double decay,
-                                                     int realizations,
+                                                     int * realizations,
                                                      int rows, int columns,
                                                      unsigned int seed);
 

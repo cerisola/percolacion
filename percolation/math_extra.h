@@ -34,6 +34,8 @@
     @param npoints the number of points in the grid.
     @param decay how fast the exponential deays (see parameter \f$h\f$ in
         formula above).
+    @param round_digits to how many digits should the grid points be rounded.
+        If round_digits = 0, then no rounding takes place.
 
     @returns pointer to the grid.
 
@@ -42,6 +44,6 @@
 */
 double * create_exponential_centered_grid(const double xmin, const double xmax,
                                           const double xcenter, const int npoints,
-                                          const double decay);
+                                          const double decay, int round_digits);
 
 #endif /* MATH_EXTRA_H */
