@@ -16,7 +16,7 @@ def percolating_cluster_density(size, percolated, L):
     return percolating_cluster_mass(size, percolated)/(L*L)
 
 
-def percolating_cluster_intensity(size, percolated, L):
+def percolating_cluster_strength(size, percolated, L):
     return percolating_cluster_mass(size, percolated)/(L*L)
 
 
@@ -35,5 +35,5 @@ def percolating_cluster_density_list(size, percolated, L):
     return percolating_cluster_mass_list(size, percolated)/(L*L)
 
 
-def percolating_cluster_intensity_list(size, percolated, L):
+def percolating_cluster_strength_list(size, percolated, L):
     return percolating_cluster_mass_list(size, percolated)/(L*L)
