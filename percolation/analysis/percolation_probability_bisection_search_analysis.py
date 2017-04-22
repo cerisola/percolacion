@@ -53,6 +53,23 @@ def plot_bisection_search_results(p_bisection_results, L, ntrials):
     plt.show()
 
 
+def plot_bisection_search_histogram(p_bisection_results, L, ntrials):
+    plt.figure()
+    plt.title('Bisection search results histogram for L = {}'.format(L))
+    plt.hist(p_bisection_results, bins=90)
+    plt.show()
+
+
+def plot_bisection_search_histogram_list(p_bisection_results, L, ntrials, cumulative=False):
+    plt.figure()
+    plt.title('Bisection search results histogram')
+    for idx in range(L.size):
+        plt.hist(p_bisection_results[idx], bins=20, cumulative=cumulative,
+                 histtype='bar', linewidth=1.2, alpha=0.8, label='L = {}'.format(L[idx]))
+    plt.legend()
+    plt.show()
+
+
 save_figures = False
 
 if not save_figures:
@@ -64,6 +81,9 @@ p_bisection_results, L, ntrials = load_data.load_bisection_critical_search_file_
 plot_percolation_probability_statistics(p_bisection_results, L, ntrials, ci_style='area')
 
 plot_bisection_search_results(p_bisection_results[4], L[4], ntrials[4])
+
+idx_hist = [9, 22, 30]
+plot_bisection_search_histogram_list([p_bisection_results[idx] for idx in idx_hist], L[idx_hist], ntrials[idx_hist])
 
 if not save_figures:
     plt.ioff()
