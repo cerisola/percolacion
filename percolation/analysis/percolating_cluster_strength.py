@@ -66,7 +66,7 @@ if not save_figures:
 L = 512
 files_root_prefix = 'print/data/probability_sweep/v5/'
 files = load_data.get_cluster_statistics_file_list(files_root_prefix, L=L)
-size, count, percolated, L, p_occupation = load_data.load_cluster_statistics_file_list(files)
+size, count, percolated, L, p_occupation, _ = load_data.load_cluster_statistics_file_list(files)
 plot_percolating_cluster_strength(size, count, percolated, L, p_occupation)
 plot_beta_fit(size, count, percolated, L, p_occupation)
 

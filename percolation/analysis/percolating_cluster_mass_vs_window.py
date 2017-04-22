@@ -51,7 +51,7 @@ ps = ['5.94005015659441e-01', '5.95363769444837e-01', '5.93435228204981e-01',
 p = ps[-5]
 files_root_prefix = 'print/data/probability_sweep/v5/'
 files = load_data.get_cluster_statistics_file_list(files_root_prefix, p_occupation=p)
-size, count, percolated, L, p_occupation = load_data.load_cluster_statistics_file_list(files)
+size, count, percolated, L, p_occupation, _ = load_data.load_cluster_statistics_file_list(files)
 plot_percolating_cluster_density(size, count, percolated, L, p_occupation, True)
 
 if not save_figures:

@@ -46,7 +46,7 @@ def load_cluster_statistics_file(file_name):
     count = np.asarray(count) / nrealizations
     percolated = np.asarray(percolated)
     idx = np.argsort(size)
-    return size[idx], count[idx], percolated[idx], L, p_occupation
+    return size[idx], count[idx], percolated[idx], L, p_occupation, nrealizations
 
 
 def load_cluster_statistics_file_list(files):
@@ -57,7 +57,8 @@ def load_cluster_statistics_file_list(files):
     percolated = [d[2] for d in data]
     L = np.array([d[3] for d in data])
     p_occupation = np.array([d[4] for d in data])
-    return size, count, percolated, L, p_occupation
+    nrealizations = np.array([d[5] for d in data])
+    return size, count, percolated, L, p_occupation, nrealizations
 
 
 # % Probability Sweep % #

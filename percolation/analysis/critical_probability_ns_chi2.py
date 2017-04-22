@@ -97,9 +97,9 @@ L = 64
 files_root_prefix = 'print/data/probability_sweep/v5/'
 files = load_data.get_cluster_statistics_file_list(files_root_prefix, L=L)
 for idx in [120, 240, 360, 480, 600, 720]:
-    size, count, _, L, p_occupation = load_data.load_cluster_statistics_file(files[idx])
+    size, count, _, L, p_occupation, _ = load_data.load_cluster_statistics_file(files[idx])
     plot_cluster_size_density(size, count, L, p_occupation)
-size, count, _, L, p_occupation = load_data.load_cluster_statistics_file_list(files)
+size, count, _, L, p_occupation, _ = load_data.load_cluster_statistics_file_list(files)
 plot_cluster_size_density_list_chi2(size, count, L, p_occupation, True)
 
 if not save_figures:
