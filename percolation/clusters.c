@@ -156,6 +156,7 @@ void cluster_statistics(const int * lattice, int rows, int columns,
 {
     int i;
     int j;
+    char percolated;
     int lattice_size;
     int cluster_labels_total_count; /* total number of different cluster labels */
     int * cluster_labels_indices; /* indices mapping each cluster label to a count value */
@@ -197,25 +198,36 @@ void cluster_statistics(const int * lattice, int rows, int columns,
     for (i = 0; i < cluster_labels_total_count; i++) {
         cluster_labels_percolated[i] = 0;
     }
+    percolated = 0;
     /* compare first and last row labels */
     for (i = 0; i < columns; i++) {
+        if (percolated) {
+            break;
+        }
         if (lattice[i] == 0) {
             continue;
         }
         for (j = 0; j < columns; j++) {
             if (lattice[i] == lattice[rows*(columns-1) + j]) {
                 cluster_labels_percolated[cluster_labels_indices[lattice[i]]] = 1;
+                percolated = 1;
+                break;
             }
         }
     }
     /* compare first and last column labels */
     for (i = 0; i < rows; i++) {
+        if (percolated) {
+            break;
+        }
         if (lattice[i*columns] == 0) {
             continue;
         }
         for (j = 0; j < rows; j++) {
             if (lattice[i*columns] == lattice[j*columns + columns - 1]) {
                 cluster_labels_percolated[cluster_labels_indices[lattice[i*columns]]] = 1;
+                percolated = 1;
+                break;
             }
         }
     }
