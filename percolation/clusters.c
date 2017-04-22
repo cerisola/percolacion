@@ -127,7 +127,7 @@ char has_percolating_cluster(const int * lattice, int rows, int columns)
             continue;
         }
         for (j = 0; j < columns; j++) {
-            if (lattice[i] == lattice[rows*(columns-1) + j]) {
+            if (lattice[i] == lattice[(rows-1)*columns + j]) {
                 return 1;
             }
         }
@@ -208,7 +208,7 @@ void cluster_statistics(const int * lattice, int rows, int columns,
             continue;
         }
         for (j = 0; j < columns; j++) {
-            if (lattice[i] == lattice[rows*(columns-1) + j]) {
+            if (lattice[i] == lattice[(rows-1)*columns + j]) {
                 cluster_labels_percolated[cluster_labels_indices[lattice[i]]] = 1;
                 percolated = 1;
                 break;
