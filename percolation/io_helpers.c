@@ -81,7 +81,7 @@ char * format_file_full_path(const char * path, const char * prefix, int rows,
 
     file_full_path_length = strlen(path) + strlen(prefix) + 160;
     file_full_path = (char *)malloc(file_full_path_length*sizeof(char));
-    sprintf(file_full_path, "%s/%s_%dx%d_%d_%.*e.csv", path, prefix, rows, columns, seed, DBL_DIG-1, other);
+    sprintf(file_full_path, "%s/%s_%dx%d_%u_%.*e.csv", path, prefix, rows, columns, seed, DBL_DIG-1, other);
 
     return file_full_path;
 }
@@ -101,7 +101,7 @@ void write_lattice_to_file(const char * path, const int * lattice, int rows,
     file_handler = fopen(file_full_path, "w");
     fprintf(file_handler, ";rows:%d\n", rows);
     fprintf(file_handler, ";columns:%d\n", columns);
-    fprintf(file_handler, ";seed:%d\n", seed);
+    fprintf(file_handler, ";seed:%u\n", seed);
     fprintf(file_handler, ";probability:%.*e\n", DBL_DIG-1, probability);
     fprintf(file_handler, ";date:%s", asctime(localtime(&current_time)));
     for (i = 0; i < rows; i++) {
@@ -138,7 +138,7 @@ void write_cluster_statistics_to_file(const char * path,
     file_handler = fopen(file_full_path, "w");
     fprintf(file_handler, ";rows:%d\n", rows);
     fprintf(file_handler, ";columns:%d\n", columns);
-    fprintf(file_handler, ";seed:%d\n", seed);
+    fprintf(file_handler, ";seed:%u\n", seed);
     fprintf(file_handler, ";probability:%.*e\n", DBL_DIG-1, probability);
     fprintf(file_handler, ";realizations:%d\n", realizations);
     if (other) {
@@ -172,7 +172,7 @@ void write_critical_point_bisection_search_results(const char * path,
     file_handler = fopen(file_full_path, "w");
     fprintf(file_handler, ";rows:%d\n", rows);
     fprintf(file_handler, ";columns:%d\n", columns);
-    fprintf(file_handler, ";seed:%d\n", seed);
+    fprintf(file_handler, ";seed:%u\n", seed);
     fprintf(file_handler, ";pini:%.*e\n", DBL_DIG-1, start_probability);
     fprintf(file_handler, ";ntrials:%d\n", number_trials);
     fprintf(file_handler, ";precision:%d\n", precision);
@@ -232,7 +232,7 @@ void write_probability_sweep_percolation_probability(const char * path,
     file_handler = fopen(file_full_path, "w");
     fprintf(file_handler, ";rows:%d\n", rows);
     fprintf(file_handler, ";columns:%d\n", columns);
-    fprintf(file_handler, ";seed:%d\n", seed);
+    fprintf(file_handler, ";seed:%u\n", seed);
     fprintf(file_handler, ";grid_npoints:%d\n", grid_npoints);
     fprintf(file_handler, ";grid_center:%.*e\n", DBL_DIG-1, probability_center);
     fprintf(file_handler, ";grid_decay:%.*e\n", DBL_DIG-1, decay);
