@@ -9,9 +9,7 @@ importlib.reload(common)
 
 
 def percolation_probability_ci(p_percolation, nsamples, ci='99.9'):
-    stderr = common.binomial_sem(p_percolation, nsamples, ci=ci)
-    p_percolation_min = np.maximum(p_percolation - stderr, 0)
-    p_percolation_max = np.minimum(p_percolation + stderr, 1)
+    p_percolation_min, p_percolation_max = common.binomial_ci_wilson(p_percolation, nsamples, ci=ci)
     return p_percolation_min, p_percolation_max
 
 
