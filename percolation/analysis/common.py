@@ -48,3 +48,21 @@ def binomial_std(p, n):
 def binomial_sem(p, n, ci=None):
     Z = Z_normal[ci]
     return Z*np.sqrt(p*(1 - p)/n)
+
+
+def binomial_ci_wald(p, n, ci=None):
+    Z = Z_normal[ci]
+    normal_stderr = Z*np.sqrt(p*(1 - p)/n)
+    p_min = p - normal_stderr
+    p_max = p + normal_stderr
+    return p_min, p_max
+
+
+def binomial_ci_wilson(p, n, ci=None):
+    Z = Z_normal[ci]
+    p_min = (2*n*p + Z**2 - (Z*np.sqrt(Z**2 - 1/n + 4*n*p*(1-p) + (4*p - 2)) + 1))/(2*(n + Z**2))
+    p_max = (2*n*p + Z**2 + (Z*np.sqrt(Z**2 - 1/n + 4*n*p*(1-p) - (4*p - 2)) + 1))/(2*(n + Z**2))
+    p_min = np.maximum(0, p_min)
+    p_max = np.minimum(1, p_max)
+    return p_min, p_max
+
