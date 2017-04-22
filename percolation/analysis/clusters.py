@@ -9,7 +9,7 @@ def percolating_cluster_mass(size, percolated):
     idx_percolated = np.where(percolated > 0)[0]
     if idx_percolated.size == 0:
         return 0
-    return np.max(size[idx_percolated])
+    return np.average(size[idx_percolated], weights=percolated[idx_percolated])
 
 
 def percolating_cluster_density(size, percolated, L):
