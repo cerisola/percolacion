@@ -1,6 +1,7 @@
 import importlib
 import numpy as np
 from scipy.integrate import simps
+from scipy.stats import linregress
 import matplotlib.pyplot as plt
 import load_data
 import common
@@ -36,6 +37,17 @@ def percolation_probability_statistics(p_occupation, p_percolation, L, nsamples,
     median = np.array([d[0] for d in data_median])
     median_err = np.array([d[1] for d in data_median])
     return mean, var, median, median_err
+
+
+def fit_std(p_occupation, p_percolation, nsamples):
+    mean = np.array([common.cdf_mean(p_percolation[idx], p_occupation[idx]) for idx in range(len(p_percolation))])
+    var = np.array([common.cdf_var(p_percolation[idx], p_occupation[idx]) for idx in range(len(p_percolation))])
+    std = np.sqrt(var)
+    idx_sort = np.argsort(std)
+    idx_min = 0
+    idx_max = 20
+    slope, intercept, _, _, std_err = linregress(std[idx_sort][idx_min:idx_max], mean[idx_sort][idx_min:idx_max])
+    return slope, intercept, std_err
 
 
 def plot_percolation_probability(p_occupation, p_percolation, L, nsamples, ci='99.9'):
@@ -81,6 +93,33 @@ def plot_critical_probability_statistics(p_occupation, p_percolation, L, nsample
     plt.legend()
     plt.show()
 
+    plt.figure()
+    plt.plot(std, mean, '-o', markersize=4.0, label='mean-std')
+    plt.grid()
+    plt.xlabel('$\sigma$')
+    plt.ylabel('$p_{\mathrm{avg}}$')
+    plt.legend()
+    plt.show()
+
+
+def plot_std_fit(p_occupation, p_percolation, nsamples):
+    mean = np.array([common.cdf_mean(p_percolation[idx], p_occupation[idx]) for idx in range(len(p_percolation))])
+    var = np.array([common.cdf_var(p_percolation[idx], p_occupation[idx]) for idx in range(len(p_percolation))])
+    std = np.sqrt(var)
+    slope, intercept, _ = fit_std(p_occupation, p_percolation, nsamples)
+
+    idx_sort = np.argsort(std)
+
+    plt.figure()
+    plt.title('$\sigma$ fit; intercept = {}'.format(intercept))
+    plt.plot(std[idx_sort], mean[idx_sort], 'o', markersize=4.0, label='observations')
+    plt.plot(std[idx_sort], slope*std[idx_sort] + intercept, '--', markersize=4.0, label='fit')
+    plt.grid()
+    plt.xlabel('$\sigma$')
+    plt.ylabel('$p_{\mathrm{avg}}$')
+    plt.legend()
+    plt.show()
+
 
 save_figures = False
 
@@ -91,6 +130,7 @@ files_root_prefix = 'print/data/probability_sweep/v5/'
 files = load_data.get_probability_sweep_file_list(files_root_prefix)
 p_occupation, p_percolation, _, nsamples, L = load_data.load_probability_sweep_file_list(files)
 plot_critical_probability_statistics(p_occupation, p_percolation, L, nsamples)
+plot_std_fit(p_occupation, p_percolation, nsamples)
 
 plot_percolation_probability(p_occupation[15], p_percolation[15], L[15], nsamples[15])
 
