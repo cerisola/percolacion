@@ -133,7 +133,7 @@ char has_percolating_cluster(const int * lattice, int rows, int columns)
         }
     }
 
-    /* compare first and last column labels
+    /* compare first and last column labels */
     for (i = 0; i < rows; i++) {
         if (lattice[i*columns] == 0) {
             continue;
@@ -144,7 +144,6 @@ char has_percolating_cluster(const int * lattice, int rows, int columns)
             }
         }
     }
-    */
 
     /* if none of the above is true, then there is no percolating cluster */
     return 0;
@@ -216,7 +215,7 @@ void cluster_statistics(const int * lattice, int rows, int columns,
             }
         }
     }
-    /* compare first and last column labels
+    /* compare first and last column labels */
     for (i = 0; i < rows; i++) {
         if (percolated) {
             break;
@@ -232,7 +231,6 @@ void cluster_statistics(const int * lattice, int rows, int columns,
             }
         }
     }
-    */
 
     free(cluster_labels_indices);
 
