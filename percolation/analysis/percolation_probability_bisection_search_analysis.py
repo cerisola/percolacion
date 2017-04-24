@@ -50,14 +50,23 @@ def plot_bisection_search_histogram(p_percolation, L, ntrials):
     plt.show()
 
 
-def plot_bisection_search_histogram_list(p_percolation, L, ntrials, cumulative=False):
+def plot_bisection_search_histogram_list(p_percolation, L, ntrials, cumulative=True):
     plt.figure()
     plt.title('Bisection search results histogram')
     for idx in range(L.size):
-        plt.hist(p_percolation[idx], bins=20, cumulative=cumulative,
+        plt.hist(p_percolation[idx], bins=20, cumulative=False,
                  histtype='bar', linewidth=1.2, alpha=0.8, label='L = {}'.format(L[idx]))
     plt.legend()
     plt.show()
+
+    if cumulative:
+        plt.figure()
+        plt.title('Bisection search results cumulative function histogram')
+        for idx in range(L.size):
+            plt.hist(p_percolation[idx], bins=20, cumulative=True,
+                     histtype='bar', linewidth=1.2, alpha=0.8, label='L = {}'.format(L[idx]))
+        plt.legend()
+        plt.show()
 
 
 save_figures = False
