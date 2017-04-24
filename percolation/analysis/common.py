@@ -66,3 +66,8 @@ def binomial_ci_wilson(p, n, ci=None):
     p_max = np.minimum(1, p_max)
     return p_min, p_max
 
+
+# % Utility function to apply above funtions to lists of different sizes of arrays % #
+def listmap(func, v, args=None):
+    return np.array([func(v[idx], **args) if args else func(v[idx]) for idx in range(len(v))])
+
