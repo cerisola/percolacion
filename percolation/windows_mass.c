@@ -32,7 +32,7 @@ int main(int argc, char ** argv)
     int window_sizes_count;
     int output_interval;
     int l;
-    int i, j, n;
+    int i, j, k, n;
 
     /* read input arguments; if none provided fallback to default values */
     if (argc < 4) {
@@ -57,13 +57,12 @@ int main(int argc, char ** argv)
     /* allocate lattice */
     lattice = allocate_lattice(L, L, 0);
 
-    window_sizes_count = 0;
-    window_size = (int *)malloc(((L-2)/2)*sizeof(int));
-    percolating_cluster_mass = (int *)malloc(((L-2)/2)*sizeof(int));
-    for (l = 2; l <= L; l += 2) {
-        window_size[l/2] = l;
-        percolating_cluster_mass[l/2] = 0;
-        window_sizes_count++;
+    window_sizes_count = (int)ceil((L-1)/2.0);
+    window_size = (int *)malloc(window_sizes_count*sizeof(int));
+    percolating_cluster_mass = (int *)malloc(window_sizes_count*sizeof(int));
+    for (i = 0; i < window_sizes_count; i++) {
+        window_size[i] = (i + 1)*2;
+        percolating_cluster_mass[i] = 0;
     }
 
     /* calculate percolating cluster mass per window size */
@@ -106,18 +105,18 @@ int main(int argc, char ** argv)
                     percolating_cluster_idx = -1;
             }
         }
-        for (l = 2; l <= L; l += 2) {
+        for (k = 0; k < window_sizes_count; k++) {
+            l = window_size[k];
             window = allocate_lattice(l, l, 0);
-            center = (int)((L - l)/2.0);
+            center = (int)round((L - l)/2.0);
             for (i = 0; i < l; i++) {
                 for (j = 0; j < l; j++) {
                     window[i*l + j] = lattice[center*(L+1) + j + L*i];
                 }
             }
-            window_size[l/2] = l;
             for (i = 0; i < l*l; i++) {
                 if (window[i] == lattice[percolating_cluster_idx]) {
-                    percolating_cluster_mass[l/2] += 1;
+                    percolating_cluster_mass[k] += 1;
                 }
             }
             /*
