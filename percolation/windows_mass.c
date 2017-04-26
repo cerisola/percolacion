@@ -101,8 +101,8 @@ int main(int argc, char ** argv)
             center_of_mass_x = center_of_mass_x / mass;
             center_of_mass_y = center_of_mass_y / mass;
             //printf("center of mass: %f\n", center_of_mass);
-            if (center_of_mass_x < (L - 2.0)/2.0 || center_of_mass_y < (L - 2.0)/2.0
-                || center_of_mass_x > (L + 2.0)/2.0 || center_of_mass_y > (L + 2.0)/2.0) {
+            if (center_of_mass_x < (L - 2.0)/2.0 - 2 || center_of_mass_y < (L - 2.0)/2.0 - 2
+                || center_of_mass_x > (L + 2.0)/2.0 + 2 || center_of_mass_y > (L + 2.0)/2.0 + 2) {
                     percolating_cluster_idx = -1;
             }
         }
