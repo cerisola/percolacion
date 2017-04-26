@@ -150,4 +150,23 @@ void write_probability_sweep_percolation_probability(const char * path,
                                                      int rows, int columns,
                                                      unsigned int seed);
 
+
+/*! Write the percolating cluster mass for given window sizes to a file.
+
+    @param path path to the folder where the data will be written. If the file
+        exists it will be overwritten.
+    @param window_sizes sizes of the windows tested.
+    @param mass accumulated mass of the percolating cluster of each window size.
+    @param window_sizes_count the total number of different window sizes tested.
+    @param probability the population probabilities used.
+    @param nrealizations how many times each window size was tested.
+    @param rows the number of rows in the lattice.
+    @param columns the number of columns in the lattice.
+    @param seed the random number generator seed used at the beginning of the
+        probability sweep.
+*/
+void write_mass_windowing_results(const char * path, const int * window_sizes,
+                                  const int * mass, int window_sizes_count,
+                                  double probability, int nrealizations,
+                                  int rows, int columns, unsigned int seed);
 #endif /* IO_HELPERS_H */
