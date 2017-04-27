@@ -30,6 +30,7 @@ int main(int argc, char ** argv)
     int * percolating_cluster_mass;
     int * window_size;
     int window_sizes_count;
+    int concentration;
     int output_interval;
     int l;
     int i, j, k, n;
@@ -70,6 +71,14 @@ int main(int argc, char ** argv)
         percolating_cluster_idx = -1;
         while (percolating_cluster_idx < 0) {
             populate_lattice(probability, lattice, L, L, 0);
+            concentration = 0;
+            for (i = 0; i < L*L; i++) {
+                concentration += lattice[i];
+            }
+            if (((double)concentration)/(L*L) < probability*0.9995 ||
+                ((double)concentration)/(L*L) > probability*1.0005) {
+                continue;
+            }
             label_clusters(lattice, L, L);
             for (i = 0; i < L; i++) {
                 for (j = 0; j < L; j++) {
