@@ -50,8 +50,7 @@ int main(int argc, char ** argv)
     }
 
     /* initialize remaining variables */
-    //output_interval = N / 10;
-    output_interval = 1;
+    output_interval = N / 10;
 
     srand_pcg(random_seed);
 
@@ -127,14 +126,7 @@ int main(int argc, char ** argv)
                     percolating_cluster_mass[k] += 1;
                 }
             }
-            /*
-            printf("lattice:\n");
-            print_lattice(lattice, L, L, 1);
-            printf("window: %dx%d @ %d\nstart at %d\n", l, l, center, center*(L+1));
-            print_lattice(window, l, l, 1);
-            */
             free(window);
-            printf("finished with lattice %d out of %d\n", l, L);
         }
         /* print progress to stdout */
         if ((n+1) % output_interval == 0) {
