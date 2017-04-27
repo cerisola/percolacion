@@ -166,7 +166,7 @@ void write_probability_sweep_percolation_probability(const char * path,
         probability sweep.
 */
 void write_mass_windowing_results(const char * path, const int * window_sizes,
-                                  const int * mass, int window_sizes_count,
+                                  const unsigned long * mass, int window_sizes_count,
                                   double probability, int nrealizations,
                                   int rows, int columns, unsigned int seed);
 #endif /* IO_HELPERS_H */

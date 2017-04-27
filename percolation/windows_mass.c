@@ -25,7 +25,7 @@ int main(int argc, char ** argv)
     int percolating_cluster_idx;
     int * window;
     int center;
-    int * percolating_cluster_mass;
+    unsigned long * percolating_cluster_mass;
     int * window_size;
     int window_sizes_count;
     int concentration;
@@ -57,7 +57,7 @@ int main(int argc, char ** argv)
 
     window_sizes_count = L-1;
     window_size = (int *)malloc(window_sizes_count*sizeof(int));
-    percolating_cluster_mass = (int *)malloc(window_sizes_count*sizeof(int));
+    percolating_cluster_mass = (unsigned long *)malloc(window_sizes_count*sizeof(unsigned long));
     for (i = 0; i < window_sizes_count; i++) {
         window_size[i] = i+2;
         percolating_cluster_mass[i] = 0;
