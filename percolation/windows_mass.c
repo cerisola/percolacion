@@ -93,7 +93,7 @@ int main(int argc, char ** argv)
                 }
                 if (percolating_cluster_idx) break;
             }
-            if (!percolating_cluster_idx) continue;
+            if (percolating_cluster_idx < 0) continue;
             mass = 0;
             center_of_mass_x = 0;
             center_of_mass_y = 0;
