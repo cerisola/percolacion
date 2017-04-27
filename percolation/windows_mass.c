@@ -23,8 +23,6 @@ int main(int argc, char ** argv)
     int N; /* number of repetitions */
     double probability; /* occupation probability */
     int percolating_cluster_idx;
-    double center_of_mass_x, center_of_mass_y;
-    int mass;
     int * window;
     int center;
     int * percolating_cluster_mass;
@@ -93,22 +91,7 @@ int main(int argc, char ** argv)
                 if (percolating_cluster_idx) break;
             }
             if (percolating_cluster_idx < 0) continue;
-            mass = 0;
-            center_of_mass_x = 0;
-            center_of_mass_y = 0;
-            for (i = 0; i < L; i++) {
-                for (j = 0; j < L; j++) {
-                    if (lattice[i*L + j] == lattice[percolating_cluster_idx]) {
-                        center_of_mass_x += i;
-                        center_of_mass_y += j;
-                        mass += 1;
-                    }
-                }
-            }
-            center_of_mass_x = center_of_mass_x / mass;
-            center_of_mass_y = center_of_mass_y / mass;
-            //printf("center of mass: %f\n", center_of_mass);
-            if ((int)center_of_mass_x != (int)(L/2.0) || (int)center_of_mass_y != (int)(L/2.0)) {
+            if (lattice[(int)(L/2.0)*L + (int)(L/2.0)] != lattice[percolating_cluster_idx]) {
                 percolating_cluster_idx = -1;
             }
         }
