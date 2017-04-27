@@ -55,11 +55,11 @@ int main(int argc, char ** argv)
     /* allocate lattice */
     lattice = allocate_lattice(L, L, 0);
 
-    window_sizes_count = (int)ceil((L-1)/2.0);
+    window_sizes_count = L-1;
     window_size = (int *)malloc(window_sizes_count*sizeof(int));
     percolating_cluster_mass = (int *)malloc(window_sizes_count*sizeof(int));
     for (i = 0; i < window_sizes_count; i++) {
-        window_size[i] = (i + 1)*2;
+        window_size[i] = i+2;
         percolating_cluster_mass[i] = 0;
     }
 
