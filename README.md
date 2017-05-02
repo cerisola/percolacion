@@ -1,4 +1,7 @@
-# Percolación
+# Informe
+En la carpeta "informe" se encuentra una copia del informe.
+
+# Programas
 En la carpeta "percolation" se ecuentran los programas utilizados para las simulaciones y hay un Makefile para compilarlos. En total hay tres programas distintos:
 
 ## percolation_critical_point_bisection_search
