@@ -5,18 +5,14 @@ LDFLAGS := -lm
 
 OUTDIR	:= build
 TARGET_COMMON := percolation
-TARGET_MAIN = $(TARGET_COMMON)_main
 TARGET_CRITICAL_POINT_BISECTION_SEARCH = $(TARGET_COMMON)_critical_point_bisection_search
 TARGET_PROBABILITY_SWEEP = $(TARGET_COMMON)_probability_sweep
 TARGET_WINDOWS_MASS = $(TARGET_COMMON)_windows_mass
 
-SRCS_COMMON = $(filter-out main.c critical_point_bisection_search.c probability_sweep.c windows_mass.c, $(wildcard *.c))
+SRCS_COMMON = $(filter-out critical_point_bisection_search.c probability_sweep.c windows_mass.c, $(wildcard *.c))
 OBJS_COMMON = $(subst .c,.o,$(SRCS_COMMON))
 
-all: main critical_point_bisection_search probability_sweep windows_mass
-
-main: $(OBJS_COMMON) main.o outputdir
-	$(CC) -o $(OUTDIR)/$(TARGET_MAIN) $(OBJS_COMMON) $@.o $(LDFLAGS)
+all: critical_point_bisection_search probability_sweep windows_mass
 
 critical_point_bisection_search: $(OBJS_COMMON) critical_point_bisection_search.o outputdir
 	$(CC) -o $(OUTDIR)/$(TARGET_CRITICAL_POINT_BISECTION_SEARCH) $(OBJS_COMMON) $@.o $(LDFLAGS)
@@ -37,7 +33,6 @@ clean:
 	$(RM) *.o
 
 distclean: clean
-	$(RM) $(OUTDIR)/$(TARGET_MAIN)
 	$(RM) $(OUTDIR)/$(TARGET_CRITICAL_POINT_BISECTION_SEARCH)
 	$(RM) $(OUTDIR)/$(TARGET_PROBABILITY_SWEEP)
 	$(RM) $(OUTDIR)/$(TARGET_WINDOWS_MASS)
