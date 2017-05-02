@@ -246,3 +246,32 @@ void write_probability_sweep_percolation_probability(const char * path,
     fclose(file_handler);
     free(file_full_path);
 }
+
+void write_mass_windowing_results(const char * path, const int * window_sizes,
+                                  const unsigned long * mass, int window_sizes_count,
+                                  double probability, int nrealizations,
+                                  int rows, int columns, unsigned int seed)
+{
+    int i;
+    time_t current_time;
+    char * file_full_path;
+    FILE * file_handler;
+
+    current_time = time(NULL);
+    file_full_path = format_file_full_path(path, "mass_windowing", rows, columns, seed, probability);
+
+    file_handler = fopen(file_full_path, "w");
+    fprintf(file_handler, ";rows:%d\n", rows);
+    fprintf(file_handler, ";columns:%d\n", columns);
+    fprintf(file_handler, ";probability:%.*e\n", DBL_DIG-1, probability);
+    fprintf(file_handler, ";nrealizations:%d\n", nrealizations);
+    fprintf(file_handler, ";seed:%u\n", seed);
+    fprintf(file_handler, ";date:%s", asctime(localtime(&current_time)));
+    for (i = 0; i < window_sizes_count; i++) {
+        fprintf(file_handler, "%d,%lu,%.*e\n", window_sizes[i], mass[i],
+                DBL_DIG-1, ((double)mass[i])/nrealizations);
+    }
+
+    fclose(file_handler);
+    free(file_full_path);
+}
